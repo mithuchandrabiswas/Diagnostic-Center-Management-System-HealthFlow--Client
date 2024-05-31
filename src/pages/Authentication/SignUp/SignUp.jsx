@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
 import toast from 'react-hot-toast'
 import { TbFidgetSpinner } from 'react-icons/tb'
-import { imageUploadedUrl } from '../../Api/Utils'
+// import { imageUploadedUrl } from '../../Api/Utils'
 import useAuth from '../../hooks/useAuth'
 
 const SignUp = () => {
@@ -30,7 +30,7 @@ const SignUp = () => {
       // console.log(data.data.display_url);
       // const imageURL = data.data.display_url
 
-      const image_url = await imageUploadedUrl(image)
+      // const image_url = await imageUploadedUrl(image)
       // console.log(image_url);
 
       // 2) Create User or Registration
@@ -38,7 +38,7 @@ const SignUp = () => {
       // console.log(result);
 
       // 3) Send User Name and image in firebase
-      await updateUserProfile(name, image_url)
+      // await updateUserProfile(name, image_url)
       navigate('/')
       toast.success('User register successfully')
     }

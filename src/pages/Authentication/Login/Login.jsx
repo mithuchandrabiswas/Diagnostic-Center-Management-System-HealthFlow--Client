@@ -3,7 +3,7 @@ import { FcGoogle } from 'react-icons/fc'
 import toast from 'react-hot-toast'
 import { TbFidgetSpinner } from 'react-icons/tb'
 import { useState } from 'react'
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../../hooks/useAuth'
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, setLoading, resetPassword } = useAuth()

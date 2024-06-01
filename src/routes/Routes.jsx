@@ -5,6 +5,9 @@ import Home from '../pages/Home/Home'
 import DashboardLayout from '../layout/DashboardLayout'
 import Login from '../pages/Authentication/Login/Login'
 import SignUp from '../pages/Authentication/SignUp/SignUp'
+import MyProfile from '../components/Dashboard/SideBar/User/MyProfile'
+import TestResults from '../components/Dashboard/SideBar/User/TestResults'
+import MyUpcomingAppointments from '../components/Dashboard/SideBar/User/MyUpcomingAppointments'
 
 
 
@@ -24,12 +27,20 @@ export const router = createBrowserRouter([
   { path: '/signup', element: <SignUp /> },
   {
     path: '/dashboard',
-    element: <DashboardLayout />
-    // children: [
-    //   {
-    //     path: '/dashboard',
-    //     element: <Statistics />,
-    //   }, 
-    // ]
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: '/dashboard',
+        element: <MyProfile />,
+      },
+      {
+        path: 'my-upcoming-appointments',
+        element: <MyUpcomingAppointments />,
+      },
+      {
+        path: 'test-results',
+        element: <TestResults />,
+      }, 
+    ]
   },
 ])

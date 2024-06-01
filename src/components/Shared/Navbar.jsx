@@ -1,49 +1,47 @@
-import Container from '../Container'
+import Container from '../Shared/Container'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import useAuth from '../../../hooks/useAuth'
-import avatarImg from '../../../assets/images/placeholder.jpg'
-import useAxiosSecure from '../../../hooks/useAxiosSecure'
-import toast from 'react-hot-toast'
-import HostRequestModal from '../../Modal/HostRequestModal'
+// import toast from 'react-hot-toast'
+import useAuth from '../../hooks/useAuth'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
-  const axiosSecure = useAxiosSecure()
+  // const axiosPrivate = useAxiosPrivate()
   const [isOpen, setIsOpen] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  // const [isModalOpen, setIsModalOpen] = useState(false)
 
-  //Close isModelOpen
-  const closeModal = async () => {
-    setIsModalOpen(false)
-  }
+  // //Close isModelOpen
+  // const closeModal = async () => {
+  //   setIsModalOpen(false)
+  // }
 
-  // Host Modal Handle
-  const handleModal = async () => {
-    // console.log('i want host');
-    try {
-      const userInfo = {
-        email: user?.email,
-        name: user?.displayName,
-        role: 'Guest',
-        status: 'Requested'
-      }
-      const { data } = await axiosSecure.put(`/user`, userInfo)
-      console.log(data);
-      if (data.modifiedCount > 0) {
-        toast.success("Request send successfully")
-      } else {
-        toast.error('PLease Wait for admin approval')
-      }
-    }
-    catch (error) {
-      console.log(error.message);
-    }
-    finally {
-      closeModal()
-    }
-  }
+  // // Host Modal Handle
+  // const handleModal = async () => {
+  //   // console.log('i want host');
+  //   try {
+  //     const userInfo = {
+  //       email: user?.email,
+  //       name: user?.displayName,
+  //       role: 'Guest',
+  //       status: 'Requested'
+  //     }
+  //     const { data } = await axiosPrivate.put(`/user`, userInfo)
+  //     console.log(data);
+  //     if (data.modifiedCount > 0) {
+  //       toast.success("Request send successfully")
+  //     } else {
+  //       toast.error('PLease Wait for admin approval')
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.log(error.message);
+  //   }
+  //   finally {
+  //     closeModal()
+  //   }
+  // }
 
   return (
     <div className='fixed w-full bg-white z-10 shadow-sm'>
@@ -77,7 +75,7 @@ const Navbar = () => {
                   {/* )} */}
                 </div>
                 {/* Host Modal */}
-                <HostRequestModal isModalOpen={isModalOpen} closeModal={closeModal} handleModal={handleModal} />
+                {/* <HostRequestModal isModalOpen={isModalOpen} closeModal={closeModal} handleModal={handleModal} /> */}
                 {/* Dropdown btn */}
                 <div
                   onClick={() => setIsOpen(!isOpen)}
@@ -89,7 +87,7 @@ const Navbar = () => {
                     <img
                       className='rounded-full'
                       referrerPolicy='no-referrer'
-                      src={user && user.photoURL ? user.photoURL : avatarImg}
+                      src={user && user.photoURL ? user.photoURL : 'Not Found'}
                       alt='profile'
                       height='30'
                       width='30'

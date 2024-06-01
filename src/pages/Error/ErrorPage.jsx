@@ -1,4 +1,4 @@
-import Button from '../../components/Shared/Button/Button'
+// import Button from '../../components/Shared/Button/Button'
 import { useNavigate } from 'react-router-dom'
 
 const ErrorPage = () => {
@@ -52,7 +52,7 @@ const ErrorPage = () => {
               <span>Go back</span>
             </button>
 
-            <Button label={'Take Me Home'} onClick={() => navigate('/')} />
+            {/* <Button label={'Take Me Home'} onClick={() => navigate('/')} /> */}
           </div>
         </div>
       </div>

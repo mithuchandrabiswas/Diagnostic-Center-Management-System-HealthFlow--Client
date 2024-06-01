@@ -5,15 +5,15 @@ import { AiOutlineBars } from 'react-icons/ai'
 import { BsGraphUp } from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
-import useRole from '../../../hooks/useRole'
+// import useRole from '../../../hooks/useRole'
 
 const SideBar = () => {
     const { logOut } = useAuth()
     const navigate = useNavigate()
     const [isActive, setActive] = useState(false)
     const [toggle, setToggle] = useState(false)
-    const [role, isLoading] = useRole()
-    console.log(role, isLoading);
+    // const [role, isLoading] = useRole()
+    // console.log(role, isLoading);
 
     const handleLogOutUser = () => {
         logOut()
@@ -103,7 +103,7 @@ const SideBar = () => {
                     <hr />
 
                     {/* Profile Menu */}
-                    <MenuItem label='Profile' address='/dashboard/profile' icon={FcSettings} />
+                    {/* <MenuItem label='Profile' address='/dashboard/profile' icon={FcSettings} /> */}
 
                     <button
                         onClick={handleLogOutUser}

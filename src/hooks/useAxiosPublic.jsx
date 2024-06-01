@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export const axiosCommon = axios.create({
+export const axiosPublic = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 })
-const useAxiosCommon = () => {
-  return axiosCommon
+const useAxiosPublic = () => {
+  return axiosPublic
 }
 
-export default useAxiosCommon
+export default useAxiosPublic

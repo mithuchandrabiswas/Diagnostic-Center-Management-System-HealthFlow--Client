@@ -3,15 +3,15 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuth from './useAuth'
 
-export const axiosSecure = axios.create({
+export const axiosPrivate = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 })
-const useAxiosSecure = () => {
+const useAxiosPrivate = () => {
   const { logOut } = useAuth()
   const navigate = useNavigate()
   useEffect(() => {
-    axiosSecure.interceptors.response.use(
+    axiosPrivate.interceptors.response.use(
       res => {
         return res
       },
@@ -26,7 +26,7 @@ const useAxiosSecure = () => {
     )
   }, [logOut, navigate])
 
-  return axiosSecure
+  return axiosPrivate
 }
 
-export default useAxiosSecure
+export default useAxiosPrivate

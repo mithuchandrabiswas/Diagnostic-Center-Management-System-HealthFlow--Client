@@ -5,9 +5,15 @@ import Home from '../pages/Home/Home'
 import DashboardLayout from '../layout/DashboardLayout'
 import Login from '../pages/Authentication/Login/Login'
 import SignUp from '../pages/Authentication/SignUp/SignUp'
-import MyProfile from '../components/Dashboard/SideBar/User/MyProfile'
-import TestResults from '../components/Dashboard/SideBar/User/TestResults'
-import MyUpcomingAppointments from '../components/Dashboard/SideBar/User/MyUpcomingAppointments'
+import MyProfile from '../pages/Dashboard/User/MyProfile'
+import TestResults from '../pages/Dashboard/User/TestResults'
+import MyUpcomingAppointments from '../pages/Dashboard/User/MyUpcomingAppointments'
+import AddTest from '../pages/Dashboard/Admin/AddTest'
+import AddBanner from '../pages/Dashboard/Admin/AddBanner'
+import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
+import ManageAppointments from '../pages/Dashboard/Admin/ManageAppointments'
+import Statistics from '../pages/Dashboard/Admin/Statistics'
+import ManageTests from '../pages/Dashboard/Admin/ManageTests'
 
 
 
@@ -29,8 +35,9 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
     children: [
+      //User Routes
       {
-        path: '/dashboard',
+        path: 'my-profile',
         element: <MyProfile />,
       },
       {
@@ -40,7 +47,33 @@ export const router = createBrowserRouter([
       {
         path: 'test-results',
         element: <TestResults />,
-      }, 
+      },
+
+      //Admin Routes
+      {
+        path: '/dashboard',
+        element: <Statistics />,
+      },
+      {
+        path: 'add-test',
+        element: <AddTest />,
+      },
+      {
+        path: 'add-banner',
+        element: <AddBanner />,
+      },
+      {
+        path: 'manage-users',
+        element: <ManageUsers />,
+      },
+      {
+        path: 'manage-appointments',
+        element: <ManageAppointments />,
+      },
+      {
+        path: 'manage-tests',
+        element: <ManageTests />,
+      },
     ]
   },
 ])

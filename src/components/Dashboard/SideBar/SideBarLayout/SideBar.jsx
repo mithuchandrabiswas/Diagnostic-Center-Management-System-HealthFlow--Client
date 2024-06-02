@@ -96,8 +96,10 @@ const SideBar = () => {
                             {/* {role === 'Guest' && <GuestMenu />}
                             {role === 'Host' ? (toggle ? <HostMenu /> : <GuestMenu />) : undefined}
                             {role === 'Admin' && <AdminMenu />} */}
+
+                            {/* My Profile */}
                             <NavLink
-                                to='/dashboard'
+                                to='my-profile'
                                 end
                                 className={({ isActive }) =>
                                     `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
@@ -134,9 +136,22 @@ const SideBar = () => {
                             </NavLink>
 
                             {/* //////// ADMIN MENU=============== */}
-                            {/* Add Test */}
                             <hr />
 
+                            {/* Statistics */}
+                            <NavLink
+                                to='/dashboard/statistics'
+                                className={({ isActive }) =>
+                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                                    }`
+                                }
+                            >
+                                <BsFillHouseAddFill className='w-5 h-5' />
+
+                                <span className='mx-4 font-medium'>Statistics</span>
+                            </NavLink>
+
+                            {/* Add Test */}
                             <NavLink
                                 to='add-test'
                                 className={({ isActive }) =>
@@ -148,6 +163,8 @@ const SideBar = () => {
 
                                 <span className='mx-4 font-medium'>Add Test</span>
                             </NavLink>
+
+                            {/* Add Banner */}
                             <NavLink
                                 to='add-banner'
                                 className={({ isActive }) =>
@@ -159,6 +176,8 @@ const SideBar = () => {
 
                                 <span className='mx-4 font-medium'>Add Banner</span>
                             </NavLink>
+
+                             {/* Manage Users */}
                             <NavLink
                                 to='manage-users'
                                 className={({ isActive }) =>
@@ -170,6 +189,8 @@ const SideBar = () => {
 
                                 <span className='mx-4 font-medium'>Manage Users</span>
                             </NavLink>
+
+                             {/* Manage Appointments */}
                             <NavLink
                                 to='manage-appointments'
                                 className={({ isActive }) =>
@@ -181,6 +202,20 @@ const SideBar = () => {
 
                                 <span className='mx-4 font-medium'>Manage Appointments</span>
                             </NavLink>
+
+                            {/* Manage Tests */}
+                            <NavLink
+                                to='manage-tests'
+                                className={({ isActive }) =>
+                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                                    }`
+                                }
+                            >
+                                <BsFillHouseAddFill className='w-5 h-5' />
+
+                                <span className='mx-4 font-medium'>Manage Tests</span>
+                            </NavLink>
+
                         </nav>
                     </div>
                 </div>

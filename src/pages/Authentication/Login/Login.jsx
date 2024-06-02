@@ -6,7 +6,7 @@ import { useState } from 'react'
 import useAuth from '../../../hooks/useAuth'
 
 const Login = () => {
-  const { signIn, signInWithGoogle, loading, setLoading, resetPassword } = useAuth()
+  const { signIn, googleSignIn, loading, setLoading, resetPassword } = useAuth()
   const navigate = useNavigate();
   const [email, setEmail] = useState('')
 
@@ -52,7 +52,7 @@ const Login = () => {
   // User Sign in by Google
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle()
+      await googleSignIn()
       navigate('/')
       toast.success('Google sign in successfully')
     }

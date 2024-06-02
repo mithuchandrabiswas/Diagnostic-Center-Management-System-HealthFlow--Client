@@ -1,173 +1,139 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
-import toast from 'react-hot-toast'
-import { TbFidgetSpinner } from 'react-icons/tb'
-import useAuth from '../../../hooks/useAuth'
-// import { imageUploadedUrl } from '../../Api/Utils'
+import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
-  const { createUser, signInWithGoogle, updateUserProfile, loading, setLoading } = useAuth()
-  const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { createUser, updateUserProfile, setLoading } = useAuth();
+    const navigate = useNavigate();
 
-  // User Create by  Email and Password
-  const handleSignUpSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const image = form.image.files[0]; // input type:file return a Array
+    // User Create by Email and Password
+    const handleSignUpSubmit = async (data) => {
+        const { name, email, password, image } = data;
+        const formData = new FormData();
+        formData.append('image', image[0]); // image[0] because the input returns an array of files
 
-    // This code are not need any more because a common function are made for this 
-    // const formData = new FormData()
-    // formData.append('image', image)
-    // console.table(name, email, password, image);
-    // console.log(image);
-    try {
-      // 1) Upload image get imageURL link
-      setLoading(true)
-      // const { data } = await axiosCus.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API}`, formData)
-      // console.log(data.data.display_url);
-      // const imageURL = data.data.display_url
+        try {
+            // 1) Upload image and get image URL link
+            setLoading(true);
+            const response = await axiosPublic.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, formData);
+            const imageURL = response.data.data.display_url;
 
-      // const image_url = await imageUploadedUrl(image)
-      // console.log(image_url);
+            // 2) Create User or Registration
+            const result = await createUser(email, password);
 
-      // 2) Create User or Registration
-      const result = await createUser(email, password)
-      // console.log(result);
+            // 3) Send User Name and image to Firebase
+            await updateUserProfile(name, imageURL);
+            navigate('/dashboard');
+            toast.success('User registered successfully');
+        } catch (error) {
+            toast.error(error.message);
+            setLoading(false);
+        }
+    };
 
-      // 3) Send User Name and image in firebase
-      // await updateUserProfile(name, image_url)
-      navigate('/')
-      toast.success('User register successfully')
-    }
-    catch (error) {
-      // console.log(error);
-      toast.error(error.message)
-      setLoading(false)
-    }
-  }
+    return (
+        <>
+            <Helmet>
+                <title>Bistro Boss | Sign Up</title>
+            </Helmet>
+            <div className="hero min-h-screen bg-base-200">
+                <div className="hero-content flex-col lg:flex-row-reverse">
+                    <div className="text-center lg:text-left">
+                        <h1 className="text-5xl font-bold">Sign up now!</h1>
+                        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                    </div>
+                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                        <form onSubmit={handleSubmit(handleSignUpSubmit)} className="card-body">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Name</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    {...register("name", { required: true })}
+                                    placeholder="Name"
+                                    className="input input-bordered"
+                                />
+                                {errors.name && <span className="text-red-600">Name is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label htmlFor='image' className='label'>
+                                    <span className="label-text">Select Image</span>
+                                </label>
+                                <input
+                                    type='file'
+                                    id='image'
+                                    accept='image/*'
+                                    {...register("image", { required: true })}
+                                />
+                                {errors.image && <span className="text-red-600">This field is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Email</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    {...register("email", { required: true })}
+                                    placeholder="email"
+                                    className="input input-bordered"
+                                />
+                                {errors.email && <span className="text-red-600">Email is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Password</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 6,
+                                        maxLength: 20,
+                                        pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                                    })}
+                                    placeholder="password"
+                                    className="input input-bordered"
+                                />
+                                {errors.password?.type === 'required' && <span className="text-red-600">Password is required</span>}
+                                {errors.password?.type === 'minLength' && <span className="text-red-600">Password must be at least 6 characters</span>}
+                                {errors.password?.type === 'maxLength' && <span className="text-red-600">Password must be less than 20 characters</span>}
+                                {errors.password?.type === 'pattern' && <span className="text-red-600">Password must have one uppercase letter, one lowercase letter, one number, and one special character.</span>}
+                            </div>
+                            {/* ====> */}
+                            {/* <div className='space-y-1 text-sm'>
+                                <label htmlFor='category' className='block text-gray-600'>
+                                    Category
+                                </label>
+                                <select
+                                    required
+                                    className='w-full px-4 py-3 border-rose-300 focus:outline-rose-500 rounded-md'
+                                    name='category'
+                                >
+                                    {categories.map(category => (
+                                        <option value={category.label} key={category.label}>
+                                            {category.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div> */}
 
-  // User Sign in by Google
-  const handleGoogleSignIn = async () => {
-    try{
-      await signInWithGoogle()
-      navigate('/')
-      toast.success('Google sign in successfully')
-    } 
-    catch (error) {
-      // console.log(error);
-      toast.error(error.message)
-    }
-  }
 
-  return (
-    <div className='flex justify-center items-center min-h-screen'>
-      <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
-          <p className='text-sm text-gray-400'>Welcome to StayVista</p>
-        </div>
-        <form onSubmit={handleSignUpSubmit}
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Name
-              </label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
+                            <div className="form-control mt-6">
+                                <input className="btn btn-primary" type="submit" value="Sign Up" />
+                            </div>
+                        </form>
+                        <p className="px-6"><small>Already have an account? <Link to="/login">Login</Link></small></p>
+                    </div>
+                </div>
             </div>
-            <div>
-              <label htmlFor='image' className='block mb-2 text-sm'>
-                Select Image:
-              </label>
-              <input
-                required
-                type='file'
-                id='image'
-                name='image'
-                accept='image/*'
-              />
-            </div>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Email address
-              </label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                required
-                placeholder='Enter Your Email Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
-              <input
-                type='password'
-                name='password'
-                autoComplete='new-password'
-                id='password'
-                required
-                placeholder='*******'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-              />
-            </div>
-          </div>
+        </>
+    );
+};
 
-          <div>
-            <button
-            disabled={loading}
-              type='submit'
-              className='bg-rose-500 w-full rounded-md py-3 text-white text-center'
-            >
-              {/* Continue */}
-              {loading? <TbFidgetSpinner className='animate-spin'/>: 'Continue'}
-            </button>
-          </div>
-        </form>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Signup with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-        </div>
-        <button onClick={handleGoogleSignIn} disabled={loading} className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer disabled:cursor-not-allowed'>
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
-        </button>
-        <p className='px-6 text-sm text-center text-gray-400'>
-          Already have an account?{' '}
-          <Link
-            to='/login'
-            className='hover:underline hover:text-rose-500 text-gray-600'
-          >
-            Login
-          </Link>
-          .
-        </p>
-      </div>
-    </div>
-  )
-}
-
-export default SignUp
+export default SignUp;

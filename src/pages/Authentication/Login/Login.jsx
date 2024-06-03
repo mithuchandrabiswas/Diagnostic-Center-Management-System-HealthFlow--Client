@@ -20,7 +20,7 @@ const Login = () => {
     try {
       setLoading(true)
       await signIn(email, password)
-      navigate('/')
+      navigate('/dashboard/profile')
       toast.success('User sign in successfully')
     }
     catch (error) {

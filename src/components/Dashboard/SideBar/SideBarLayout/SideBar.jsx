@@ -1,30 +1,29 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
 import { BsFillHouseAddFill, BsGraphUp } from 'react-icons/bs'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../../../hooks/useAuth'
 import { MdHomeWork } from 'react-icons/md'
-// import useRole from '../../../hooks/useRole'
+import useRole from '../../../../hooks/useRole'
+import MenuItem from '../Menu/MenuItem'
+import { FcSettings } from 'react-icons/fc'
+import UserMenu from '../Menu/UserMenu'
+import AdminMenu from '../Menu/AdminMenu'
 
 const SideBar = () => {
     const { logOut } = useAuth()
     const navigate = useNavigate()
     const [isActive, setActive] = useState(false)
     const [toggle, setToggle] = useState(false)
-    // const [role, isLoading] = useRole()
-    // console.log(role, isLoading);
+    const [role, isLoading] = useRole()
+    console.log(role);
 
     const handleLogOutUser = () => {
         logOut()
         navigate('/')
     }
 
-    // Sidebar Responsive Handler
-    const handleToggle = () => {
-        setActive(!isActive)
-    }
 
     // Change toggle checked value
     const toggleHandler = (e) => {
@@ -81,8 +80,6 @@ const SideBar = () => {
 
                     {/* Nav Items */}
                     <div className='flex flex-col justify-between flex-1 mt-6'>
-                        {/* Conditional toggle button here.. */}
-                        {/* {role === 'Host' && <ToggleButton toggleHandler={toggleHandler} handleToggle={handleToggle} />} */}
 
                         {/*  Menu Items */}
                         <nav>
@@ -93,129 +90,9 @@ const SideBar = () => {
                             {/* My Listing */}
                             {/* <MenuItem label='My Listings' address='/dashboard/my-listings' icon={MdHomeWork} /> */}
 
-                            {/* {role === 'Guest' && <GuestMenu />}
-                            {role === 'Host' ? (toggle ? <HostMenu /> : <GuestMenu />) : undefined}
-                            {role === 'Admin' && <AdminMenu />} */}
-
-                            {/* My Profile */}
-                            <NavLink
-                                to='my-profile'
-                                end
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsGraphUp className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>My Profile</span>
-                            </NavLink>
-
-                            {/* My Upcoming Appointments */}
-                            <NavLink
-                                to='my-upcoming-appointments'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <MdHomeWork className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>My Upcoming Appointments</span>
-                            </NavLink>
-                            {/* My Test Results */}
-                            <NavLink
-                                to='test-results'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <MdHomeWork className='w-5 h-5' />
-                                <span className='mx-4 font-medium'>Test Results</span>
-                            </NavLink>
-
-                            {/* //////// ADMIN MENU=============== */}
-                            <hr />
-
-                            {/* Statistics */}
-                            <NavLink
-                                to='/dashboard/statistics'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsFillHouseAddFill className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>Statistics</span>
-                            </NavLink>
-
-                            {/* Add Test */}
-                            <NavLink
-                                to='add-test'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsFillHouseAddFill className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>Add Test</span>
-                            </NavLink>
-
-                            {/* Add Banner */}
-                            <NavLink
-                                to='add-banner'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsFillHouseAddFill className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>Add Banner</span>
-                            </NavLink>
-
-                             {/* Manage Users */}
-                            <NavLink
-                                to='manage-users'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsFillHouseAddFill className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>Manage Users</span>
-                            </NavLink>
-
-                             {/* Manage Appointments */}
-                            <NavLink
-                                to='manage-appointments'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsFillHouseAddFill className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>Manage Appointments</span>
-                            </NavLink>
-
-                            {/* Manage Tests */}
-                            <NavLink
-                                to='manage-tests'
-                                className={({ isActive }) =>
-                                    `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                    }`
-                                }
-                            >
-                                <BsFillHouseAddFill className='w-5 h-5' />
-
-                                <span className='mx-4 font-medium'>Manage Tests</span>
-                            </NavLink>
-
+                            {role === 'user' && <UserMenu />}
+                            {role === 'admin' && <AdminMenu />}
+                            
                         </nav>
                     </div>
                 </div>
@@ -224,7 +101,11 @@ const SideBar = () => {
                     <hr />
 
                     {/* Profile Menu */}
-                    {/* <MenuItem label='Profile' address='/dashboard/profile' icon={FcSettings} /> */}
+                    <MenuItem
+                        label='Profile'
+                        address='/dashboard/profile'
+                        icon={FcSettings}
+                    />
 
                     <button
                         onClick={handleLogOutUser}

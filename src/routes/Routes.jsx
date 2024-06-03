@@ -14,6 +14,8 @@ import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
 import ManageAppointments from '../pages/Dashboard/Admin/ManageAppointments'
 import Statistics from '../pages/Dashboard/Admin/Statistics'
 import ManageTests from '../pages/Dashboard/Admin/ManageTests'
+import PrivateRoute from './PrivateRoute'
+import Profile from '../pages/Dashboard/Common/Profile'
 
 
 
@@ -35,6 +37,11 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
     children: [
+      // Common Routes
+      {
+        path: 'profile',
+        element: <PrivateRoute><Profile /></PrivateRoute>,
+      },
       //User Routes
       {
         path: 'my-profile',

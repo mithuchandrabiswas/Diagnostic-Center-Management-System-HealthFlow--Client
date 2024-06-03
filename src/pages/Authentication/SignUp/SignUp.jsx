@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import { imageUpload } from "../../../Utils/imageUrl";
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic();
@@ -25,7 +26,7 @@ const SignUp = () => {
         queryKey: ['districts'],
         queryFn: async () => {
             const { data } = await axiosPublic.get('/districts');
-            return data; 
+            return data;
         }
     });
 
@@ -34,7 +35,7 @@ const SignUp = () => {
         queryKey: ['upazilas'],
         queryFn: async () => {
             const { data } = await axiosPublic.get('/upazilas');
-            return data; 
+            return data;
         }
     });
 
@@ -62,26 +63,23 @@ const SignUp = () => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('image', image[0]); // image[0] because the input returns an array of files
-
         try {
             // 1) Upload image and get image URL link
             setLoading(true);
-            const response = await axiosPublic.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, formData);
-            const imageURL = response.data.data.display_url;
+            const image_url = await imageUpload(image[0])
+            // console.log(image_url);
 
             // 2) Create User or Registration
             const result = await createUser(email, password);
 
             // 3) Send User Name and image to Firebase
-            await updateUserProfile(name, imageURL);
+            await updateUserProfile(name, image_url);
 
             // 4) Save user data in DB with default status "active"
             const userData = {
                 name,
                 email,
-                imageURL,
+                image_url,
                 blood_group,
                 district: selectedDistrictName, // Use the selected district name
                 upazila,
@@ -90,7 +88,7 @@ const SignUp = () => {
             };
             await axiosPublic.post('/user', userData);
 
-            navigate('/dashboard');
+            navigate('/dashboard/profile');
             toast.success('User registered successfully');
         } catch (error) {
             toast.error(error.message);

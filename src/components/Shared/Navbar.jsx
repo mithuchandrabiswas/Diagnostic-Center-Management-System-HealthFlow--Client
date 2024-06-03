@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 // import toast from 'react-hot-toast'
 import useAuth from '../../hooks/useAuth'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import { BiUser } from 'react-icons/bi'
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
@@ -87,7 +88,7 @@ const Navbar = () => {
                     <img
                       className='rounded-full'
                       referrerPolicy='no-referrer'
-                      src={user && user.photoURL ? user.photoURL : 'Not Found'}
+                      src={user && user.photoURL ? user.photoURL : <BiUser />}
                       alt='profile'
                       height='30'
                       width='30'

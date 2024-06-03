@@ -16,6 +16,7 @@ import Statistics from '../pages/Dashboard/Admin/Statistics'
 import ManageTests from '../pages/Dashboard/Admin/ManageTests'
 import PrivateRoute from './PrivateRoute'
 import Profile from '../pages/Dashboard/Common/Profile'
+import ManageBanner from '../pages/Dashboard/Admin/ManageBanner'
 
 
 
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: 'manage-tests',
         element: <ManageTests />,
+      },
+      {
+        path: 'manage-banner',
+        element: <ManageBanner />,
       },
     ]
   },

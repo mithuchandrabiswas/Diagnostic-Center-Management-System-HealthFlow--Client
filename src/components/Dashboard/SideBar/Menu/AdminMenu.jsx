@@ -46,6 +46,13 @@ const AdminMenu = () => {
                                 address={'manage-tests'}
                                 icon={BsFillHouseAddFill}
                             />
+
+                            {/* Manage Banner */}
+                            <MenuItem
+                                label={'Manage Banner'}
+                                address={'manage-banner'}
+                                icon={BsFillHouseAddFill}
+                            />
         </>
     );
 };

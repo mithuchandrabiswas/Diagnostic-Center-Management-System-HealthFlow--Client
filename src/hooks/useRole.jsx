@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
-import useAxiosPrivate from "./useAxiosPrivate";
 import useAxiosPublic from "./useAxiosPublic";
 
 

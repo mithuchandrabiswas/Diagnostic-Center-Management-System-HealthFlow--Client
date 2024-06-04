@@ -17,6 +17,10 @@ import ManageTests from '../pages/Dashboard/Admin/ManageTests'
 import PrivateRoute from './PrivateRoute'
 import Profile from '../pages/Dashboard/Common/Profile'
 import ManageBanner from '../pages/Dashboard/Admin/ManageBanner'
+import AboutUs from '../pages/AboutUs/AboutUs'
+import ContactUs from '../pages/ContactUs/ContactUs'
+import DoctorTeam from '../pages/DoctorTeam/DoctorTeam'
+import AllTests from '../pages/AllTests/AllTests'
 
 
 
@@ -29,6 +33,22 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/all-tests',
+        element: <PrivateRoute><AllTests /></PrivateRoute>,
+      },
+      {
+        path: '/team',
+        element: <DoctorTeam />,
+      },
+      {
+        path: '/about-us',
+        element: <AboutUs />,
+      },
+      {
+        path: '/contact-us',
+        element: <ContactUs />,
       },
     ],
   },

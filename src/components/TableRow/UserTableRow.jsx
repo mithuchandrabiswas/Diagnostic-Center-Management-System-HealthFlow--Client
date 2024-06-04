@@ -111,6 +111,26 @@ const UserTableRow = ({ user, refetch }) => {
                     user={user}
                 />
             </td>
+
+                {/* Download Button */}
+            {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                <button
+                    onClick={() => setIsStatusModalOpen(true)}
+                    className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
+                >
+                    <span
+                        aria-hidden='true'
+                        className='absolute inset-0 bg-green-200 opacity-50 rounded-full'
+                    ></span>
+                    <span className='relative'>Download Details</span>
+                </button>
+                <DownloadUserModal
+                    isOpen={isStatusModalOpen}
+                    setIsOpen={setIsStatusModalOpen}
+                    modalHandler={handleStatusUpdate}
+                    user={user}
+                />
+            </td> */}
         </tr>
     )
 }

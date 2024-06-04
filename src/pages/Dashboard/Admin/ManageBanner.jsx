@@ -75,7 +75,13 @@ const ManageBanner = () => {
                                             scope='col'
                                             className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                         >
-                                            Select Banner
+                                            Banner Status
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className=' bg-white  border-b border-gray-200 text-gray-800 font-bold  text-center text-xs uppercase'
+                                        >
+                                            Update
                                         </th>
                                         <th
                                             scope='col'

@@ -52,7 +52,7 @@ const UpdateUserStatusModal = ({ setIsOpen, isOpen, modalHandler, user }) => {
                   as='h3'
                   className='text-lg font-medium text-center leading-6 text-gray-900'
                 >
-                  Update User Role
+                  Update User Status
                 </DialogTitle>
                 <div className='mt-4 w-full'>
                   <Listbox value={selected} onChange={setSelected}>

@@ -21,6 +21,7 @@ import AboutUs from '../pages/AboutUs/AboutUs'
 import ContactUs from '../pages/ContactUs/ContactUs'
 import DoctorTeam from '../pages/DoctorTeam/DoctorTeam'
 import AllTests from '../pages/AllTests/AllTests'
+import TestDetails from '../pages/DetailsPage/TestDetails'
 
 
 
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: '/all-tests',
         element: <PrivateRoute><AllTests /></PrivateRoute>,
+      },
+      {
+        path: '/test-details/:id',
+        element: <TestDetails />,
       },
       {
         path: '/team',

@@ -1,19 +1,34 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { useState, Fragment } from 'react';
 import {
     Dialog,
     Transition,
     TransitionChild,
     DialogPanel,
     DialogTitle,
-} from '@headlessui/react'
-import { format } from 'date-fns'
-import { Fragment } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-import { Elements } from '@stripe/react-stripe-js'
-import CheckoutForm from '../Form/CheckoutForm'
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_Publishable_key)
+} from '@headlessui/react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from '../../Form/CheckoutForm';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_Publishable_key);
 
 const BookingAppointmentModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
+    const axiosPublic = useAxiosPublic();
+
+    const { data: banners = [], isLoading, isError, error } = useQuery({
+        queryKey: ['banners'],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get('/banners');
+            return data;
+        },
+    });
+
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error: {error.message}</div>;
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -45,40 +60,34 @@ const BookingAppointmentModal = ({ closeModal, isOpen, bookingInfo, refetch }) =
                                     as='h3'
                                     className='text-lg font-medium text-center leading-6 text-gray-900'
                                 >
-                                    Review Info Before Reserve
+                                    Review Info Before Appointment
                                 </DialogTitle>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        {/* Room: {booker.title} */}
-                                        hello
-                                    </p>
-                                </div>
-                                {/* <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>
-                    Location: {booker.location}
-                  </p>
-                </div> */}
-                                <div className='mt-2'>
-                                    <p className='text-sm text-gray-500'>
-                                        Guest: {bookingInfo.bookerInfo.name}
+                                        Test Name: {bookingInfo.test_name}
                                     </p>
                                 </div>
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
-                                        From: {format(new Date(bookingInfo.from), 'PP')} - To:{' '}
-                                        {format(new Date(bookingInfo.to), 'PP')}
+                                        Booker Name: {bookingInfo.bookerInfo.name}
                                     </p>
                                 </div>
-
                                 <div className='mt-2'>
                                     <p className='text-sm text-gray-500'>
                                         Price: $ {bookingInfo.price}
                                     </p>
+                                    <p className='text-sm text-gray-500'>
+                                        Slot Date:{bookingInfo.booking_date}
+                                    </p>
+                                    <p className='text-sm text-gray-500'>
+                                        Slot Time:{bookingInfo.time}
+                                    </p>
+                                    <p className='text-sm text-gray-500'>
+                                        Slot Time:{bookingInfo._id}
+                                    </p>
                                 </div>
-                                <hr className='mt-8 ' />
 
                                 <Elements stripe={stripePromise}>
-                                    {/* checkout form */}
                                     <CheckoutForm
                                         bookingInfo={bookingInfo}
                                         closeModal={closeModal}
@@ -91,14 +100,14 @@ const BookingAppointmentModal = ({ closeModal, isOpen, bookingInfo, refetch }) =
                 </div>
             </Dialog>
         </Transition>
-    )
-}
+    );
+};
 
 BookingAppointmentModal.propTypes = {
-    bookingInfo: PropTypes.object,
-    closeModal: PropTypes.func,
-    isOpen: PropTypes.bool,
-    refetch: PropTypes.func,
-}
+    bookingInfo: PropTypes.object.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    refetch: PropTypes.func.isRequired,
+};
 
-export default BookingAppointmentModal
+export default BookingAppointmentModal;

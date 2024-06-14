@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const TestCard = ({ test }) => {
   return (
@@ -14,17 +14,19 @@ const TestCard = ({ test }) => {
               rounded-xl
             '
         >
-          <img
-            className='
+          {test?.image && (
+            <img
+              className='
                 object-cover 
                 h-full 
                 w-full 
                 group-hover:scale-110 
                 transition
               '
-            src={test?.image}
-            alt='Room'
-          />
+              src={test?.image}
+              alt='Test'
+            />
+          )}
           <div
             className='
               absolute
@@ -34,18 +36,18 @@ const TestCard = ({ test }) => {
           ></div>
         </div>
         <div className='font-semibold text-lg'>{test?.title}</div>
-        <div className='font-light text-neutral-500'>{test?.from}</div>
+        <div className='font-light text-neutral-500'>{test?.date}</div>
+        <div className='font-semibold'>Remaining Slots: {test?.total_slots}</div>
         <div className='flex flex-row items-center gap-1'>
-          <div className='font-semibold'>{test?.total_slots}</div>
-          <div className='font-light'>{test?.details}</div>
+          <div className='font-light' title={test?.details}>{test?.details.slice(0, 50)}</div>
         </div>
       </div>
     </Link>
-  )
-}
+  );
+};
 
 TestCard.propTypes = {
   test: PropTypes.object,
-}
+};
 
-export default TestCard
+export default TestCard;

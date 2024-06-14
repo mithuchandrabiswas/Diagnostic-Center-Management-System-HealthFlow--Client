@@ -9,7 +9,7 @@ const UserMenu = () => {
             {/* My Profile */}
             <MenuItem
                 label='My Profile'
-                address='/dashboard/profile'
+                address='/dashboard/my-profile'
                 icon={FcSettings}
             />
 

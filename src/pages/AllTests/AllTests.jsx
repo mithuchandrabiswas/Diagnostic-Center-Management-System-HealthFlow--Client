@@ -27,17 +27,16 @@ const AllTests = () => {
     return (
         <Container>
             {tests && tests.length > 0 ? (
-                <div className='pt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8'>
+                <div className='pt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
                     {tests.map(test => (
                         <TestCard key={test._id} test={test} />
                     ))}
                 </div>
             ) : (
                 <div className='flex items-center justify-center min-h-[calc(100vh-300px)]'>
-                    <h1>Hello</h1>
+                    <h1>Add some test for booking or appointment</h1>
                 </div>
             )}
-            <h1>hello</h1>
         </Container>
     )
 }

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 
@@ -30,7 +31,7 @@ const Banner = () => {
                             <div className="max-w-md">
                                 <h1 className="mb-5 text-5xl font-bold">{activeBanner.banner_title}</h1>
                                 <p className="mb-5">{activeBanner.banner_description}</p>
-                                <button className="btn btn-primary">All Test</button>
+                                <Link to='/all-tests'><button className="btn btn-primary">All Tests</button></Link>
                             </div>
                         </div>
                     </div>

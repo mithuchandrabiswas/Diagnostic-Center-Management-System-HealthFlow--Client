@@ -5,7 +5,6 @@ import Home from '../pages/Home/Home'
 import DashboardLayout from '../layout/DashboardLayout'
 import Login from '../pages/Authentication/Login/Login'
 import SignUp from '../pages/Authentication/SignUp/SignUp'
-import MyProfile from '../pages/Dashboard/User/MyProfile'
 import TestResults from '../pages/Dashboard/User/TestResults'
 import MyUpcomingAppointments from '../pages/Dashboard/User/MyUpcomingAppointments'
 import AddTest from '../pages/Dashboard/Admin/AddTest'
@@ -15,13 +14,13 @@ import ManageAppointments from '../pages/Dashboard/Admin/ManageAppointments'
 import Statistics from '../pages/Dashboard/Admin/Statistics'
 import ManageTests from '../pages/Dashboard/Admin/ManageTests'
 import PrivateRoute from './PrivateRoute'
-import Profile from '../pages/Dashboard/Common/Profile'
 import ManageBanner from '../pages/Dashboard/Admin/ManageBanner'
 import AboutUs from '../pages/AboutUs/AboutUs'
 import ContactUs from '../pages/ContactUs/ContactUs'
 import DoctorTeam from '../pages/DoctorTeam/DoctorTeam'
 import AllTests from '../pages/AllTests/AllTests'
 import TestDetails from '../pages/DetailsPage/TestDetails'
+import MyProfile from '../pages/Dashboard/User/MyProfile'
 
 
 
@@ -63,11 +62,11 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
     children: [
-      // Common Routes
-      {
-        path: 'profile',
-        element: <PrivateRoute><Profile /></PrivateRoute>,
-      },
+      // // Common Routes
+      // {
+      //   path: 'profile',
+      //   element: <PrivateRoute><Profile /></PrivateRoute>,
+      // },
       //User Routes
       {
         path: 'my-profile',

@@ -15,11 +15,11 @@ const TestDetails = () => {
   const [params, setParams] = useSearchParams()
 
   const { data: test = [], isLoading, refetch } = useQuery({
-      queryKey: ['test', id],
-      queryFn: async () => {
-          const { data } = await axiosPublic.get(`/test-details/${id}`)
-          return data
-      },
+    queryKey: ['test', id],
+    queryFn: async () => {
+      const { data } = await axiosPublic.get(`/test-details/${id}`)
+      return data
+    },
   })
 
 
@@ -32,56 +32,19 @@ const TestDetails = () => {
         <title>{test?.title}</title>
       </Helmet>
       {test && (
-        <div className='max-w-screen-lg mx-auto'>
+        <div className='mx-auto border flex flex-col md:flex-row p-2'>
           {/* Header */}
-          <div className='flex flex-col gap-6'>
-            <div>
-              
-              <div className='w-full md:h-[60vh] overflow-hidden rounded-xl'>
-                <img
-                  className='object-cover w-full'
-                  src={test.image}
-                  alt='header image'
-                />
-              </div>
-            </div>
-          </div>
           <div className='grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6'>
             {/* test Info */}
-            <div className='col-span-4 flex flex-col gap-8'>
+            <div className='col-span-4 flex flex-col gap-2'>
+              <img className='object-contain' src={test.image} alt='header image' />
               <div className='flex flex-col gap-2'>
-                <div
-                  className='
-                text-xl 
-                font-semibold 
-                flex 
-                flex-row 
-                items-center
-                gap-2
-              '
-                >
-                  <div>Hosted by {test?.adminInfo?.name}</div>
-
-                  <img
-                    className='rounded-full'
-                    height='30'
-                    width='30'
-                    alt='Avatar'
-                    referrerPolicy='no-referrer'
-                    src={test?.adminInfo?.image}
-                  />
+                <div className='text-xl font-semibold flex flex-row items-center gap-2'>
+                  <div className='text-sm'>Hosted by {test?.adminInfo?.name}</div>
+                  <img className='rounded-full' height='30' width='30' alt='Avatar' referrerPolicy='no-referrer' src={test?.adminInfo?.image} />
                 </div>
-                <div
-                  className='
-                flex 
-                flex-row 
-                items-center 
-                gap-4 
-                font-light
-                text-neutral-500
-              '
-                >
-                  <div>{test?.from} Date</div>
+                <div className='flex flex-row items-center gap-4 font-light text-neutral-500'>
+                  <div>{test?.date} Date</div>
                   <div>{test?.test_name} Name</div>
                   <div>{test?.price} Price</div>
                   <div>{test?.total_slots} Slot</div>
@@ -89,10 +52,7 @@ const TestDetails = () => {
               </div>
 
               <hr />
-              <div
-                className='
-          text-lg font-light text-neutral-500'
-              >
+              <div className='text-xs font-light text-neutral-500'>
                 {test?.details}
               </div>
               <hr />

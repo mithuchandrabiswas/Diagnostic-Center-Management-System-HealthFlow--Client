@@ -2,19 +2,27 @@ import { Helmet } from 'react-helmet-async';
 import useAuth from '../../../hooks/useAuth';
 import useRole from '../../../hooks/useRole';
 import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import UpdateUserModal from '../../../components/Modal/User/UpdateUserProfile';
 import toast from 'react-hot-toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const MyProfile = () => {
     const { user, loading } = useAuth();
     const [role, isLoading] = useRole();
     const axiosPublic = useAxiosPublic();
-
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const {data: userInfo = {}} = useQuery({
+        queryKey: ['userInfo'],
+        queryFn: async () => {
+            const {data} = await axiosPublic.get(`/user/${user.email}`)
+            return data
+        }
+    })
+
+    console.log(userInfo);
 
     const { mutateAsync, isError, error } = useMutation({
         mutationFn: async ({ role, status }) => {
@@ -82,7 +90,7 @@ const MyProfile = () => {
                             isOpen={isModalOpen}
                             setIsOpen={setIsModalOpen}
                             modalHandler={handleProfileUpdate}
-                            user={user}
+                            userInfo={userInfo}
                         />
                     </div>
                 </div>

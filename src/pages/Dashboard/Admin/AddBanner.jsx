@@ -15,11 +15,10 @@ const AddBanner = () => {
         const form = e.target;
         const banner_name = form.banner_name.value;
         const image = form.image.files[0];
-        
+
         try {
             // Upload the image and get the URL
             const image_url = await imageUpload(image);
-            console.log(image_url);
 
             const banner_title = form.banner_title.value;
             const banner_description = form.banner_description.value;
@@ -29,7 +28,7 @@ const AddBanner = () => {
                 email: user?.email,
                 name: user?.displayName,
             };
-            const isActive = 'false';
+            const isActive = false; 
             const bannerData = {
                 banner_name,
                 image_url,
@@ -40,15 +39,19 @@ const AddBanner = () => {
                 adminInfo,
                 isActive,
             };
+
             console.table(bannerData);
 
+            // Post bannerData to backend API
             const { data } = await axiosPublic.post(`/banner`, bannerData);
-            console.log(data);
+            // console.log("Backend response:", data);
+            // Display success message
             toast.success("Banner added successfully");
-            navigate('manage-banner');
+            // Navigate to manage-banner page
+            navigate('/dashboard/manage-banner');
         } catch (err) {
-            console.log(err);
-            toast.error("Failed to add banner");
+            console.error("Error adding banner:", err);
+            toast.error("Failed to add banner: " + err.message);
         }
     };
 
@@ -117,7 +120,7 @@ const AddBanner = () => {
                     </div>
 
                     <div className="form-control mt-6">
-                        <button className="btn btn-sm btn-primary">Add Banner</button>
+                        <button type="submit" className="btn btn-sm btn-primary">Add Banner</button>
                     </div>
                 </form>
             </div>

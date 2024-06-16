@@ -82,9 +82,6 @@ const BookingAppointmentModal = ({ closeModal, isOpen, bookingInfo, refetch }) =
                                     <p className='text-sm text-gray-500'>
                                         Slot Time:{bookingInfo.time}
                                     </p>
-                                    <p className='text-sm text-gray-500'>
-                                        Slot Time:{bookingInfo._id}
-                                    </p>
                                 </div>
 
                                 <Elements stripe={stripePromise}>

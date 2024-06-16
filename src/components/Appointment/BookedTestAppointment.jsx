@@ -4,13 +4,16 @@ import useAuth from '../../hooks/useAuth';
 import Button from '../Shared/Button';
 import BookingAppointmentModal from '../Modal/Appointment/BookingAppointmentModal';
 import { format } from 'date-fns';
+import useRole from '../../hooks/useRole';
 
 const BookedTestAppointment = ({ test, refetch }) => {
-    console.log(test);
     const { user } = useAuth();
+    const [role] = useRole()
     const [isOpen, setIsOpen] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState('');
     const [slotOptions, setSlotOptions] = useState([]);
+    // console.log(test);
+    console.log(role);
 
     const closeModal = () => {
         setIsOpen(false);
@@ -67,18 +70,29 @@ const BookedTestAppointment = ({ test, refetch }) => {
             </div>
             <hr />
             <div className="p-4">
-                {test?.total_slots < 0 ? (
-                    <p className='text-red-500'> Sorry all slots already book today </p>
-            ) : (
-            <Button
-                disabled={test?.booked || !selectedSlot || test?.total_slots < 1}
-                onClick={() => setIsOpen(true)}
-                label="Book Now"
-            />
-                )}
-        </div>
+                {role === 'admin' ?
+                    (
+                        <p className='text-red-500'> Sorry, you are the owner of this website so you can't book any appointments </p>
+                    )
+                    :
+                    (
+                        test?.total_slots < 1 ?
+                            (
+                                <p className='text-red-500'> Sorry, all slots are already booked today </p>
+                            )
+                            :
+                            (
+                                <Button
+                                    disabled={test?.booked || !selectedSlot || test?.total_slots < 1}
+                                    onClick={() => setIsOpen(true)}
+                                    label="Book Now"
+                                />
+                            )
+                    )}
+            </div>
 
-            {/* Modal */ }
+
+            {/* Modal */}
             <BookingAppointmentModal
                 isOpen={isOpen}
                 refetch={refetch}
@@ -113,8 +127,6 @@ BookedTestAppointment.propTypes = {
         booked: PropTypes.bool,
         date: PropTypes.string,
         total_slots: PropTypes.number,
-
-        // Add other properties of `test` as needed
     }).isRequired,
     refetch: PropTypes.func.isRequired,
 };

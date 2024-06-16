@@ -1,55 +1,60 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
-import useAuth from '../../hooks/useAuth';
-import UpdateUserStatusModal from '../Modal/User/UpdateUserStatusModal';
-import UpdateUserRoleModal from '../Modal/User/UpdateUserRoleModal';
-import UserModal from '../Modal/UserModal'; // Assuming you have a modal for user details
 
 const UpcommingAppointmentsTableRow = ({ appointment, refetch }) => {
-    const { user } = useAuth();
+    const axiosPublic = useAxiosPublic();
+    const appointmentDate = new Date(appointment.date).toLocaleDateString();
 
-    const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+    const deleteAppointment = async (id) => {
+        try {
+            await axiosPublic.delete(`/appointment/${id}`);
+            toast.success('Appointment cancelled successfully');
+            refetch();
+        } catch (error) {
+            toast.error('Error cancelling appointment');
+        }
+    };
 
-    // const axiosPublic = useAxiosPublic();
-
-
-    const handleDownloadPdf = () => {
-        const doc = new jsPDF();
-        doc.text(`User Details`, 10, 10);
-        doc.autoTable({
-            startY: 20,
-            head: [['Field', 'Value']],
-            body: [
-                ['Email', user.email],
-                ['Role', user.role],
-                ['Status', user.status],
-                // Add other fields here
+    const handleDelete = () => {
+        confirmAlert({
+            title: 'Confirm to cancel',
+            message: 'Are you sure you want to cancel this appointment?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => deleteAppointment(appointment._id),
+                },
+                {
+                    label: 'No',
+                },
             ],
         });
-        doc.save(`${user.email}-details.pdf`);
     };
 
     return (
         <>
-            <tr>
+            <tr className='text-center'>
                 <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                     <p className='text-gray-900 whitespace-no-wrap'>{appointment?.test_name}</p>
                 </td>
                 <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <p className='text-gray-900 whitespace-no-wrap'>{appointment?.date}</p>
+                    <p className='text-gray-900 whitespace-no-wrap'>{appointmentDate}</p>
                 </td>
                 <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                    <p className='text-gray-900 whitespace-no-wrap'>{appointment?.booking_time}</p>
+                    <p className='text-gray-900 whitespace-no-wrap'>{appointment?.time}</p>
                 </td>
-                
+                <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                    <p className='text-gray-900 whitespace-no-wrap'>{appointment?.total_slots}</p>
+                </td>
+                <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                    <p className='text-gray-900 whitespace-no-wrap'>{appointment?.report_status}</p>
+                </td>
                 <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                     <button
-                        onClick={handleDownloadPdf}
+                        onClick={handleDelete}
                         className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-blue-900 leading-tight'
                     >
                         <span
@@ -60,11 +65,6 @@ const UpcommingAppointmentsTableRow = ({ appointment, refetch }) => {
                     </button>
                 </td>
             </tr>
-            <UserModal
-                isOpen={isUserModalOpen}
-                onRequestClose={() => setIsUserModalOpen(false)}
-                user={user}
-            />
         </>
     );
 };

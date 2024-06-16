@@ -88,7 +88,7 @@ const SignUp = () => {
             };
             await axiosPublic.post('/user', userData);
 
-            navigate('/dashboard/profile');
+            navigate('/dashboard/my-profile');
             toast.success('User registered successfully');
         } catch (error) {
             toast.error(error.message);

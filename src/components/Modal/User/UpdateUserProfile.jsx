@@ -1,125 +1,104 @@
 import PropTypes from 'prop-types'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import {
   Dialog,
-  Listbox,
   Transition,
-  TransitionChild,
   DialogTitle,
-  DialogPanel,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
 } from '@headlessui/react'
-import { BsCheckLg } from 'react-icons/bs'
-import { AiOutlineDown } from 'react-icons/ai'
-import { Helmet } from "react-helmet-async";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importing eye icons
-import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { imageUpload } from "../../../Utils/imageUrl";
+import { useForm } from "react-hook-form"
+import { useQuery } from "@tanstack/react-query"
+import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 import useAxiosPublic from '../../../hooks/useAxiosPublic'
 import useAuth from '../../../hooks/useAuth'
+import { imageUpload } from '../../../Utils/imageUrl'
 
-const UpdateUserRoleModal = ({ setIsOpen, isOpen, modalHandler }) => {
-  const axiosPublic = useAxiosPublic();
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
-  const { createUser, updateUserProfile, setLoading, user } = useAuth();
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [selectedDistrict, setSelectedDistrict] = useState('');
-  const [selectedDistrictName, setSelectedDistrictName] = useState('');
-  const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+const UpdateUserRoleModal = ({ setIsOpen, isOpen, userInfo }) => {
+  const axiosPublic = useAxiosPublic()
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm()
+  const { setLoading } = useAuth()
+  const [selectedDistrict, setSelectedDistrict] = useState('')
+  const [selectedDistrictName, setSelectedDistrictName] = useState('')
+  const [filteredUpazilas, setFilteredUpazilas] = useState([])
 
-  // Get all District data from Database
+  // Fetch districts and upazilas
   const { data: allDistrict = [], isLoading } = useQuery({
     queryKey: ['districts'],
     queryFn: async () => {
-      const { data } = await axiosPublic.get('/districts');
-      return data;
+      const { data } = await axiosPublic.get('/districts')
+      return data
     }
-  });
+  })
 
-  // Get all Upazila data from Database
   const { data: allUpazila = [] } = useQuery({
     queryKey: ['upazilas'],
     queryFn: async () => {
-      const { data } = await axiosPublic.get('/upazilas');
-      return data;
+      const { data } = await axiosPublic.get('/upazilas')
+      return data
     }
-  });
+  })
 
-  // Update filtered upazilas when selected district changes
+  // Pre-fill form with user data
+  useEffect(() => {
+    if (userInfo) {
+      setValue("name", userInfo.name)
+      setValue("email", userInfo.email)
+      setValue("blood_group", userInfo.blood_group)
+      setValue("district", userInfo.district_id)
+      setSelectedDistrict(userInfo.district_id)
+      setSelectedDistrictName(userInfo.district)
+      setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === userInfo.district_id))
+      setValue("upazila", userInfo.upazila)
+    }
+  }, [userInfo, setValue, allUpazila])
+
+  // Handle district change
   const handleDistrictChange = (event) => {
-    const districtId = event.target.value;
-    const districtName = event.target.options[event.target.selectedIndex].text;
-    setSelectedDistrict(districtId);
-    setSelectedDistrictName(districtName);
-    setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === districtId));
-  };
+    const districtId = event.target.value
+    const districtName = event.target.options[event.target.selectedIndex].text
+    setSelectedDistrict(districtId)
+    setSelectedDistrictName(districtName)
+    setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === districtId))
+  }
 
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleSignUpSubmit = async (data) => {
-    const { name, email, password, confirm_password, image, blood_group, upazila } = data;
-    if (password !== confirm_password) {
-      toast.error("Passwords do not match");
-      return;
-    }
+  // Handle form submission
+  const handleUpdateSubmit = async (data) => {
+    const { name, email, image, blood_group, upazila } = data
 
     try {
-      // 1) Upload image and get image URL link
-      setLoading(true);
-      const image_url = await imageUpload(image[0])
-      // console.log(image_url);
+      setLoading(true)
+      let image_url = userInfo.image_url
+      if (image && image[0]) {
+        image_url = await imageUpload(image[0])
+      }
 
-      // 2) Create User or Registration
-      const result = await createUser(email, password);
-
-      // 3) Send User Name and image to Firebase
-      await updateUserProfile(name, image_url);
-
-      // 4) Save user data in DB with default status "active"
       const userData = {
         name,
         email,
         image_url,
         blood_group,
-        district: selectedDistrictName, // Use the selected district name
+        district: selectedDistrictName,
         upazila,
-        status: "active",
-        role: 'user',
-      };
-      await axiosPublic.post('/user', userData);
+      }
+      await axiosPublic.patch(`/user/update/${userInfo.email}`, userData)
 
-      navigate('/dashboard/profile');
-      toast.success('User registered successfully');
+      toast.success('User profile updated successfully')
+      setIsOpen(false) // Close the modal on successful update
     } catch (error) {
-      toast.error(error.message);
-      setLoading(false);
+      toast.error(error.message)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as='div'
-        className='relative z-10'
-        onClose={() => setIsOpen(false)}
-      >
-        <TransitionChild
+      <Dialog as='div' className='relative z-10' onClose={() => setIsOpen(false)}>
+        <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
           enterFrom='opacity-0'
@@ -129,11 +108,11 @@ const UpdateUserRoleModal = ({ setIsOpen, isOpen, modalHandler }) => {
           leaveTo='opacity-0'
         >
           <div className='fixed inset-0 bg-black bg-opacity-25' />
-        </TransitionChild>
+        </Transition.Child>
 
         <div className='fixed inset-0 overflow-y-auto'>
           <div className='flex min-h-full items-center justify-center p-4 text-center'>
-            <TransitionChild
+            <Transition.Child
               as={Fragment}
               enter='ease-out duration-300'
               enterFrom='opacity-0 scale-95'
@@ -142,178 +121,106 @@ const UpdateUserRoleModal = ({ setIsOpen, isOpen, modalHandler }) => {
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <DialogPanel className='w-full h-56 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                <DialogTitle
-                  as='h3'
-                  className='text-lg font-medium text-center leading-6 text-gray-900'
-                >
+              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+                <DialogTitle as='h3' className='text-lg font-medium text-center leading-6 text-gray-900'>
                   Update User Role
                 </DialogTitle>
                 <div className='mt-4 w-full'>
-                  <Listbox
-                  // value={selected} onChange={setSelected}
-                  >
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                      <form onSubmit={handleSubmit(handleSignUpSubmit)} className="card-body">
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Name</span>
-                          </label>
-                          <input
-                            type="text"
-                            {...register("name", { required: true })}
-                            placeholder="Name"
-                            className="input input-bordered"
-                          />
-                          {errors.name && <span className="text-red-600">Name is required</span>}
-                        </div>
-                        <div className="form-control">
-                          <label htmlFor='image' className='label'>
-                            <span className="label-text">Select Image</span>
-                          </label>
-                          <input
-                            type='file'
-                            id='image'
-                            accept='image/*'
-                            {...register("image", { required: true })}
-                          />
-                          {errors.image && <span className="text-red-600">This field is required</span>}
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Email</span>
-                          </label>
-                          <input
-                            type="email"
-                            {...register("email", { required: true })}
-                            placeholder="email"
-                            className="input input-bordered"
-                          />
-                          {errors.email && <span className="text-red-600">Email is required</span>}
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Blood Group</span>
-                          </label>
-                          <select {...register("blood_group", { required: true })} className="select select-bordered">
-                            <option value="">Select Blood Group</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                          </select>
-                          {errors.blood_group && <span className="text-red-600">Blood group is required</span>}
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">District</span>
-                          </label>
-                          <select
-                            {...register("district", { required: true })}
-                            className="select select-bordered"
-                            onChange={handleDistrictChange}
-                          >
-                            <option value="">Select District</option>
-                            {allDistrict.map((district) => (
-                              <option key={district.id} value={district.id}>{district.name}</option>
-                            ))}
-                          </select>
-                          {errors.district && <span className="text-red-600">District is required</span>}
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Upazila</span>
-                          </label>
-                          <select {...register("upazila", { required: true })} className="select select-bordered">
-                            <option value="">Select Upazila</option>
-                            {filteredUpazilas.map((upazila) => (
-                              <option key={upazila.id} value={upazila.name}>{upazila.name}</option>
-                            ))}
-                          </select>
-                          {errors.upazila && <span className="text-red-600">Upazila is required</span>}
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Password</span>
-                          </label>
-                          <div className="relative">
-                            <input
-                              type={showPassword ? "text" : "password"}
-                              {...register("password", {
-                                required: true,
-                                minLength: 6,
-                                maxLength: 20,
-                                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
-                              })}
-                              placeholder="password"
-                              className="input input-bordered pr-10"
-                            />
-                            <span className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                              {showPassword ? (
-                                <FaEyeSlash
-                                  className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                                  onClick={togglePassword}
-                                />
-                              ) : (
-                                <FaEye
-                                  className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                                  onClick={togglePassword}
-                                />
-                              )}
-                            </span>
-                          </div>
-                          {errors.password?.type === 'required' && <span className="text-red-600">Password is required</span>}
-                          {errors.password?.type === 'minLength' && <span className="text-red-600">Password must be at least 6 characters</span>}
-                          {errors.password?.type === 'maxLength' && <span className="text-red-600">Password must be less than 20 characters</span>}
-                          {errors.password?.type === 'pattern' && <span className="text-red-600">Password must have one uppercase letter, one lowercase letter, one number, and one special character.</span>}
-                        </div>
-                        <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">Confirm Password</span>
-                          </label>
-                          <input
-                            type="password"
-                            {...register("confirm_password", {
-                              required: true,
-                              validate: value => value === watch("password") || "Passwords do not match"
-                            })}
-                            placeholder="confirm password"
-                            className="input input-bordered"
-                          />
-                          {errors.confirm_password && <span className="text-red-600">{errors.confirm_password.message}</span>}
-                        </div>
-                        <div className="form-control mt-6">
-                          <input className="btn btn-primary" type="submit" value="Sign Up" />
-                        </div>
-                      </form>
-                      <p className="px-6"><small>Already have an account? <Link to="/login">Login</Link></small></p>
-                    </div>
-                  </Listbox>
+                  <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                    <form onSubmit={handleSubmit(handleUpdateSubmit)} className="card-body">
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Name</span>
+                        </label>
+                        <input
+                          type="text"
+                          defaultValue={userInfo?.name}
+                          {...register("name", { required: true })}
+                          placeholder="Name"
+                          className="input input-bordered input-sm"
+                        />
+                        {errors.name && <span className="text-red-600">Name is required</span>}
+                      </div>
+                      <div className="form-control">
+                        <label htmlFor='image' className='label'>
+                          <span className="label-text">Select Image</span>
+                        </label>
+                        <input
+                          type='file'
+                          id='image'
+                          accept='image/*'
+                          {...register("image")}
+                          className="input input-sm"
+                        />
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Email</span>
+                        </label>
+                        <input
+                          type="email"
+                          defaultValue={userInfo?.email}
+                          {...register("email", { required: true })}
+                          placeholder="Email"
+                          disabled
+                          className="input input-bordered input-sm"
+                        />
+                        {errors.email && <span className="text-red-600">Email is required</span>}
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Blood Group</span>
+                        </label>
+                        <select {...register("blood_group", { required: true })} className="select select-bordered select-sm" defaultValue={userInfo?.blood_group}>
+                          <option value="">Select Blood Group</option>
+                          <option value="A+">A+</option>
+                          <option value="A-">A-</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="AB+">AB+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="O+">O+</option>
+                          <option value="O-">O-</option>
+                        </select>
+                        {errors.blood_group && <span className="text-red-600">Blood group is required</span>}
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">District</span>
+                        </label>
+                        <select
+                          {...register("district", { required: true })}
+                          className="select select-bordered select-sm"
+                          onChange={handleDistrictChange}
+                          defaultValue={userInfo?.district}
+                        >
+                          <option value="">Select District</option>
+                          {allDistrict.map((district) => (
+                            <option key={district.id} value={district.id}>{district.name}</option>
+                          ))}
+                        </select>
+                        {errors.district && <span className="text-red-600">District is required</span>}
+                      </div>
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text">Upazila</span>
+                        </label>
+                        <select {...register("upazila", { required: true })} className="select select-bordered select-sm" defaultValue={userInfo?.upazila}>
+                          <option value="">Select Upazila</option>
+                          {filteredUpazilas.map((upazila) => (
+                            <option key={upazila.id} value={upazila.name}>{upazila.name}</option>
+                          ))}
+                        </select>
+                        {errors.upazila && <span className="text-red-600">Upazila is required</span>}
+                      </div>
+                      <div className="form-control mt-6">
+                        <input className="btn btn-sm" type="submit" value="Update Profile" />
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <hr className='mt-16 ' />
-
-                <div className='flex mt-2 justify-center gap-5'>
-                  <button
-                    type='button'
-                    className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
-                    onClick={() => modalHandler(selected)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    type='button'
-                    className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </DialogPanel>
-            </TransitionChild>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
         </div>
       </Dialog>
@@ -322,10 +229,9 @@ const UpdateUserRoleModal = ({ setIsOpen, isOpen, modalHandler }) => {
 }
 
 UpdateUserRoleModal.propTypes = {
-  user: PropTypes.object,
-  modalHandler: PropTypes.func,
-  setIsOpen: PropTypes.func,
-  isOpen: PropTypes.bool,
+  userInfo: PropTypes.object.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 }
 
 export default UpdateUserRoleModal

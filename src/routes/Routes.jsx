@@ -21,6 +21,7 @@ import DoctorTeam from '../pages/DoctorTeam/DoctorTeam'
 import AllTests from '../pages/AllTests/AllTests'
 import TestDetails from '../pages/DetailsPage/TestDetails'
 import MyProfile from '../pages/Dashboard/User/MyProfile'
+import AdminRoute from './AdminRoute'
 
 
 
@@ -70,45 +71,45 @@ export const router = createBrowserRouter([
       //User Routes
       {
         path: 'my-profile',
-        element: <MyProfile />,
+        element: <PrivateRoute><MyProfile /></PrivateRoute>,
       },
       {
         path: 'my-upcoming-appointments',
-        element: <MyUpcomingAppointments />,
+        element: <PrivateRoute><MyUpcomingAppointments /></PrivateRoute>,
       },
       {
         path: 'test-results',
-        element: <TestResults />,
+        element: <PrivateRoute><TestResults /></PrivateRoute>,
       },
 
       //Admin Routes
       {
         path: '/dashboard',
-        element: <Statistics />,
+        element: <PrivateRoute><AdminRoute><Statistics /></AdminRoute></PrivateRoute>,
       },
       {
         path: 'add-test',
-        element: <AddTest />,
+        element: <PrivateRoute><AdminRoute><AddTest /></AdminRoute></PrivateRoute>,
       },
       {
         path: 'add-banner',
-        element: <AddBanner />,
+        element: <PrivateRoute><AdminRoute><AddBanner /></AdminRoute></PrivateRoute>,
       },
       {
         path: 'manage-users',
-        element: <ManageUsers />,
+        element: <PrivateRoute><AdminRoute><ManageUsers /></AdminRoute></PrivateRoute>,
       },
       {
         path: 'manage-appointments',
-        element: <ManageAppointments />,
+        element: <PrivateRoute><AdminRoute><ManageAppointments /></AdminRoute></PrivateRoute>,
       },
       {
         path: 'manage-tests',
-        element: <ManageTests />,
+        element: <PrivateRoute><AdminRoute><ManageTests /></AdminRoute></PrivateRoute>,
       },
       {
         path: 'manage-banner',
-        element: <ManageBanner />,
+        element: <PrivateRoute><AdminRoute><ManageBanner /></AdminRoute></PrivateRoute>,
       },
     ]
   },

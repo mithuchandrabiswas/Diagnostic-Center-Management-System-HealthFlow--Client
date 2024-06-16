@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate()
   const { user } = useAuth();
   const [clientSecret, setClientSecret] = useState(null);
   const [cardError, setCardError] = useState('');
@@ -22,7 +24,8 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
     if (bookingInfo?.price && bookingInfo.price > 1) {
       fetchClientSecret(bookingInfo.price);
     }
-  }, [bookingInfo?.price]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookingInfo.price]);
 
   const fetchClientSecret = async (price) => {
     try {
@@ -49,30 +52,30 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
     event.preventDefault();
     setProcessing(true);
     setCardError('');
-
+  
     if (!stripe || !elements) {
       setProcessing(false);
       toast.error('Stripe.js has not loaded yet.');
       return;
     }
-
+  
     const card = elements.getElement(CardElement);
     if (!card) {
       setProcessing(false);
       toast.error('Card Element not found.');
       return;
     }
-
+  
     try {
       const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card,
       });
-
+  
       if (paymentMethodError) {
         throw new Error(paymentMethodError.message);
       }
-
+  
       const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card,
@@ -82,11 +85,11 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
           },
         },
       });
-
+  
       if (confirmError) {
         throw new Error(confirmError.message);
       }
-
+  
       if (paymentIntent.status === 'succeeded') {
         const discountedPrice = calculateDiscountedPrice(bookingInfo.price, discount);
         const paymentInfo = {
@@ -97,17 +100,21 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
           testId: bookingInfo._id,
         };
         delete paymentInfo._id;
-
-        await axiosPublic.post('/payments', paymentInfo);
-        await axiosPublic.post('/appointment', paymentInfo);
-
-        refetch();
-        closeModal();
-        toast.success('Appointment Booked Successfully');
+  
+        try {
+          await axiosPublic.post('/appointment', paymentInfo);
+          refetch();
+          closeModal();
+          toast.success('Appointment Booked Successfully');
+          navigate('/dashboard/my-upcoming-appointments')
+        } catch (error) {
+          console.error('Failed to send payment info to server:', error.response || error.message);
+          toast.error('Failed to save appointment data. Please try again.');
+        }
       }
     } catch (error) {
       setCardError(error.message);
-      toast.error('Failed to process payment.');
+      toast.error(`Failed to process payment: ${error.message}`);
     } finally {
       setProcessing(false);
     }

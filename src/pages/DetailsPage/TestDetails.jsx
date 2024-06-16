@@ -44,10 +44,10 @@ const TestDetails = () => {
                   <img className='rounded-full' height='30' width='30' alt='Avatar' referrerPolicy='no-referrer' src={test?.adminInfo?.image} />
                 </div>
                 <div className='flex flex-row items-center gap-4 font-light text-neutral-500'>
-                  <div>{test?.date} Date</div>
-                  <div>{test?.test_name} Name</div>
-                  <div>{test?.price} Price</div>
-                  <div>{test?.total_slots} Slot</div>
+                  <div>Date: {test?.date} </div>
+                  <div>Name: {test?.test_name} </div>
+                  <div>Price: {test?.price} </div>
+                  <div>Total Slot: {test?.total_slots} </div>
                 </div>
               </div>
 

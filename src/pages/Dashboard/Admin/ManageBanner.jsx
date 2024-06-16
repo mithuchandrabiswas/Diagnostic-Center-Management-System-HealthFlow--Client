@@ -12,7 +12,7 @@ const ManageBanner = () => {
         queryKey: ['banners', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-            if (!user?.email) return []; // Prevent unnecessary calls if user is not defined
+            if (!user?.email) return []; 
             const { data } = await axiosPublic.get(`/banners/${user.email}`);
             return data;
         },

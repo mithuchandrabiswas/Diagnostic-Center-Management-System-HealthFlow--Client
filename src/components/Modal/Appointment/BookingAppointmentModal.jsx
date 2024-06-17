@@ -89,6 +89,7 @@ const BookingAppointmentModal = ({ closeModal, isOpen, bookingInfo, refetch }) =
                                         bookingInfo={bookingInfo}
                                         closeModal={closeModal}
                                         refetch={refetch}
+                                        banners = {banners}
                                     />
                                 </Elements>
                             </DialogPanel>

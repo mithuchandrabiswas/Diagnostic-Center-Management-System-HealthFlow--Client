@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import useAxiosPublic from '../../hooks/useAxiosPublic'
@@ -15,14 +14,11 @@ const AllTests = () => {
         queryKey: ['tests'],
         queryFn: async () => {
             const { data } = await axiosPublic.get(`/tests`)
-
             return data
         },
     })
 
-
     if (isLoading) return <LoadingSpinner />
-    // console.log(tests);
 
     return (
         <Container>
@@ -34,7 +30,7 @@ const AllTests = () => {
                 </div>
             ) : (
                 <div className='flex items-center justify-center min-h-[calc(100vh-300px)]'>
-                    <h1>Add some test for booking or appointment</h1>
+                    <h1 className="text-gray-600">Add some test for booking or appointment</h1>
                 </div>
             )}
         </Container>
@@ -42,6 +38,7 @@ const AllTests = () => {
 }
 
 export default AllTests
+
 
 
 

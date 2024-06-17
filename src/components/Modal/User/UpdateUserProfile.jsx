@@ -13,7 +13,7 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic'
 import useAuth from '../../../hooks/useAuth'
 import { imageUpload } from '../../../Utils/imageUrl'
 
-const UpdateUserRoleModal = ({ setIsOpen, isOpen, userInfo }) => {
+const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
   const axiosPublic = useAxiosPublic()
   const { register, handleSubmit, formState: { errors }, setValue } = useForm()
   const { setLoading } = useAuth()
@@ -80,7 +80,7 @@ const UpdateUserRoleModal = ({ setIsOpen, isOpen, userInfo }) => {
         district: selectedDistrictName,
         upazila,
       }
-      await axiosPublic.patch(`/user/update/${userInfo.email}`, userData)
+      await axiosPublic.put(`/user/update/${userInfo.email}`, userData)
 
       toast.success('User profile updated successfully')
       setIsOpen(false) // Close the modal on successful update
@@ -228,10 +228,10 @@ const UpdateUserRoleModal = ({ setIsOpen, isOpen, userInfo }) => {
   )
 }
 
-UpdateUserRoleModal.propTypes = {
+UpdateUserProfile.propTypes = {
   userInfo: PropTypes.object.isRequired,
   setIsOpen: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
 }
 
-export default UpdateUserRoleModal
+export default UpdateUserProfile

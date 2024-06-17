@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import PropTypes from 'prop-types';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import './CheckoutFormCss.css';
@@ -8,24 +9,33 @@ import toast from 'react-hot-toast';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { useNavigate } from 'react-router-dom';
 
-const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
+const CheckoutForm = ({ closeModal, bookingInfo, refetch, banners }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosPublic = useAxiosPublic();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [clientSecret, setClientSecret] = useState(null);
   const [cardError, setCardError] = useState('');
   const [processing, setProcessing] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState(0);
+  const [couponApplied, setCouponApplied] = useState(false);
 
   useEffect(() => {
     if (bookingInfo?.price && bookingInfo.price > 1) {
       fetchClientSecret(bookingInfo.price);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookingInfo.price]);
+
+  useEffect(() => {
+    const activeBanner = banners.find(banner => banner.isActive === true);
+    if (activeBanner) {
+      setCouponCode(activeBanner.coupon_code);
+      setDiscount(activeBanner.coupon_rate);
+    }
+  }, [banners]);
 
   const fetchClientSecret = async (price) => {
     try {
@@ -37,11 +47,10 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
   };
 
   const handleApplyCoupon = () => {
-    const discountMap = { admin20: 20, admin19: 19 };
-    const appliedDiscount = discountMap[couponCode] || 0;
-
-    if (appliedDiscount) {
-      setDiscount(appliedDiscount);
+    const activeBanner = banners.find(banner => banner.isActive === true);
+    if (activeBanner && couponCode === activeBanner.coupon_code) {
+      setDiscount(activeBanner.coupon_rate);
+      setCouponApplied(true);
       toast.success('Coupon applied successfully!');
     } else {
       toast.error('Invalid coupon code.');
@@ -52,30 +61,30 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
     event.preventDefault();
     setProcessing(true);
     setCardError('');
-  
+
     if (!stripe || !elements) {
       setProcessing(false);
       toast.error('Stripe.js has not loaded yet.');
       return;
     }
-  
+
     const card = elements.getElement(CardElement);
     if (!card) {
       setProcessing(false);
       toast.error('Card Element not found.');
       return;
     }
-  
+
     try {
       const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card,
       });
-  
+
       if (paymentMethodError) {
         throw new Error(paymentMethodError.message);
       }
-  
+
       const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card,
@@ -85,13 +94,13 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
           },
         },
       });
-  
+
       if (confirmError) {
         throw new Error(confirmError.message);
       }
-  
+
       if (paymentIntent.status === 'succeeded') {
-        const discountedPrice = calculateDiscountedPrice(bookingInfo.price, discount);
+        const discountedPrice = calculateDiscountedPrice(bookingInfo.price, couponApplied ? discount : 0);
         const paymentInfo = {
           ...bookingInfo,
           transactionId: paymentIntent.id,
@@ -100,13 +109,13 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
           testId: bookingInfo._id,
         };
         delete paymentInfo._id;
-  
+
         try {
           await axiosPublic.post('/appointment', paymentInfo);
           refetch();
           closeModal();
           toast.success('Appointment Booked Successfully');
-          navigate('/dashboard/my-upcoming-appointments')
+          navigate('/dashboard/my-upcoming-appointments');
         } catch (error) {
           console.error('Failed to send payment info to server:', error.response || error.message);
           toast.error('Failed to save appointment data. Please try again.');
@@ -130,7 +139,6 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
         <div className='w-full flex items-center relative'>
           <input
             type='text'
-            value={couponCode}
             onChange={(e) => setCouponCode(e.target.value)}
             placeholder='Enter coupon code'
             className='w-full p-2 border border-gray-300 rounded-md'
@@ -171,7 +179,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
           {processing ? (
             <ImSpinner9 className='animate-spin m-auto' size={24} />
           ) : (
-            `Pay ${calculateDiscountedPrice(bookingInfo?.price, discount).toFixed(2)} BDT`
+            `Pay ${calculateDiscountedPrice(bookingInfo?.price, couponApplied ? discount : 0).toFixed(2)} BDT`
           )}
         </button>
         <button
@@ -191,6 +199,7 @@ CheckoutForm.propTypes = {
   bookingInfo: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
+  banners: PropTypes.array.isRequired,
 };
 
 export default CheckoutForm;

@@ -5,26 +5,37 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useState } from "react";
 import { BiEdit } from 'react-icons/bi';
 import UpdateTestModal from '../Modal/Test/UpdateTestModal';
+import { confirmAlert } from 'react-confirm-alert';
 
 const TestTableRow = ({ test, refetch }) => {
     const [isUpdateTestModalOpen, setIsUpdateTestModalOpen] = useState(false)
+    const axiosPublic = useAxiosPublic();
 
-    // const axiosPublic = useAxiosPublic();
+    const deleteBanner = async (id) => {
+        try {
+            await axiosPublic.delete(`/test/${id}`);
+            toast.success('Test delete successfully');
+            refetch(); // Refetch Tests data after successful deletion
+        } catch (error) {
+            toast.error('Error cancelling test');
+        }
+    };
 
-    // const { mutateAsync } = useMutation({
-    //     mutationFn: async ({ isActive }) => {
-    //         const { data } = await axiosPublic.patch(
-    //             `/banners/update/${bannerInfo._id}`,
-    //             { isActive }
-    //         );
-    //         return data;
-    //     },
-    //     onSuccess: data => {
-    //         refetch();
-    //         toast.success('Banner isActive Status updated successfully!');
-    //         setIsBannerStatusModalOpen(false);
-    //     },
-    // });
+    const handleDelete = () => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure you want to delete this test?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => deleteBanner(test._id),
+                },
+                {
+                    label: 'No',
+                },
+            ],
+        });
+    };
 
 
 
@@ -72,18 +83,13 @@ const TestTableRow = ({ test, refetch }) => {
             </td>
 
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
-                    <span
-                        aria-hidden='true'
-                        className='absolute inset-0 bg-green-200 opacity-50 rounded-full'
-                    ></span>
+                <button
+                    onClick={handleDelete}
+                    className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-blue-900 leading-tight'
+                >
+                    <span className='absolute inset-0 bg-red-500 opacity-50 rounded-full'></span>
                     <span className='relative'>Delete</span>
-                </span>
-                {/* Update User Modal */}
-                {/* <BannerModal
-                    closeModal={closeModal}
-                    isOpen={isOpen}
-                /> */}
+                </button>
             </td>
         </tr>
     );

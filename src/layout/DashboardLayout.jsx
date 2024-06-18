@@ -1,9 +1,13 @@
 import { Outlet } from "react-router-dom";
 import SideBar from "../components/Dashboard/SideBar/SideBarLayout/SideBar";
+import { Helmet } from "react-helmet-async";
 
 const DashboardLayout = () => {
     return (
         <div className="relative min-h-screen md:flex">
+            <Helmet>
+                <title>HealthFlow | Dashboard</title>
+            </Helmet>
             {/* 1) SideBar --> Always Fix and Same */}
             <SideBar />
 

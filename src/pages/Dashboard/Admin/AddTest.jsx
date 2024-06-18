@@ -79,21 +79,20 @@ const AddTest = () => {
     return (
         <>
             <Helmet>
-                <title>Add Test | Dashboard</title>
+                <title>HealthFlow | Add Test</title>
             </Helmet>
-
             <div>
-                <h1 className="text-2xl text-center">Add Test</h1>
-                <div className='w-11/12 mx-auto min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50 p-4'>
+                <h1 className="text-2xl text-center text-gray-800">Add Test</h1>
+                <div className='w-11/12 mx-auto min-h-[calc(100vh-40px)] flex flex-col justify-center items-center rounded-xl bg-gray-100 p-4'>
                     <form onSubmit={handleSubmit}>
                         <div className='grid grid-cols-1 lg:grid-cols-2 gap-10'>
                             <div className='space-y-6'>
                                 <div className='space-y-1 text-sm'>
-                                    <label htmlFor='test_name' className='block text-gray-600'>
+                                    <label htmlFor='test_name' className='block text-gray-700'>
                                         Test Name
                                     </label>
                                     <input
-                                        className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md input-sm'
+                                        className='w-full px-4 py-3 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-md input-sm'
                                         name='test_name'
                                         id='test_name'
                                         type='text'
@@ -103,13 +102,14 @@ const AddTest = () => {
                                 </div>
 
                                 <div className='space-y-1'>
-                                    <label htmlFor='date' className='block text-gray-600'>
+                                    <label htmlFor='date' className='block text-gray-700'>
                                         Select Date
                                     </label>
                                     <DatePicker
-                                        className='border p-2 border-red-400 rounded-md'
+                                        className='border p-2 border-gray-300 rounded-md'
                                         selected={startDate}
                                         onChange={(date) => setStartDate(date)}
+                                        dateFormat="MM/dd/yyyy"
                                     />
                                 </div>
                             </div>
@@ -127,7 +127,7 @@ const AddTest = () => {
                                                     accept='image/*'
                                                     hidden
                                                 />
-                                                <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
+                                                <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-600'>
                                                     {imageText.length > 20
                                                         ? imageText.split('.')[0].slice(0, 15) + '....' + imageText.split('.')[1]
                                                         : imageText}
@@ -141,11 +141,11 @@ const AddTest = () => {
                                 </div>
                                 <div className='flex justify-between gap-2'>
                                     <div className='space-y-1 text-sm'>
-                                        <label htmlFor='price' className='block text-gray-600'>
+                                        <label htmlFor='price' className='block text-gray-700'>
                                             Price
                                         </label>
                                         <input
-                                            className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md input-sm'
+                                            className='w-full px-4 py-3 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-md input-sm'
                                             name='price'
                                             id='price'
                                             type='number'
@@ -155,11 +155,11 @@ const AddTest = () => {
                                     </div>
 
                                     <div className='space-y-1 text-sm'>
-                                        <label htmlFor='total_slots' className='block text-gray-600'>
+                                        <label htmlFor='total_slots' className='block text-gray-700'>
                                             Total Slots
                                         </label>
                                         <input
-                                            className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md input-sm'
+                                            className='w-full px-4 py-3 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-md input-sm'
                                             name='total_slots'
                                             id='total_slots'
                                             type='number'
@@ -169,12 +169,12 @@ const AddTest = () => {
                                     </div>
                                 </div>
                                 <div className='space-y-1 text-sm'>
-                                    <label htmlFor='details' className='block text-gray-600'>
+                                    <label htmlFor='details' className='block text-gray-700'>
                                         Details
                                     </label>
                                     <textarea
                                         id='details'
-                                        className='block rounded-md focus:rose-300 w-full h-20 px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500'
+                                        className='block rounded-md focus:ring-2 focus:ring-rose-500 w-full h-20 px-4 py-3 text-gray-800 border border-gray-300 focus:outline-none rounded-md'
                                         name='details'
                                     ></textarea>
                                 </div>
@@ -184,7 +184,7 @@ const AddTest = () => {
                         <button
                             disabled={loading}
                             type='submit'
-                            className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500'
+                            className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500'
                         >
                             {loading ? (
                                 <TbFidgetSpinner className='animate-spin m-auto' />

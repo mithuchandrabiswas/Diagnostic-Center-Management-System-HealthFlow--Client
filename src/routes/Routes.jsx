@@ -88,6 +88,10 @@ export const router = createBrowserRouter([
         element: <PrivateRoute><AdminRoute><Statistics /></AdminRoute></PrivateRoute>,
       },
       {
+        path: 'statistics',
+        element: <PrivateRoute><AdminRoute><Statistics /></AdminRoute></PrivateRoute>,
+      },
+      {
         path: 'add-test',
         element: <PrivateRoute><AdminRoute><AddTest /></AdminRoute></PrivateRoute>,
       },

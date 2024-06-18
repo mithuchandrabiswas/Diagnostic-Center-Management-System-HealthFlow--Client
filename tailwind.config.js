@@ -8,19 +8,11 @@ export default {
     extend: {
       colors: {
         primary: {
-          blue: '#007BFF',
-          green: '#28A745',
-        },
-        secondary: {
-          blue: '#E3F2FD',
-          green: '#D4EDDA',
+          lightGray: '#f4f4f9',
+          blue: '#0073e6',
         },
         accent: {
-          orange: '#FFC107',
-          gray: '#6C757D',
-        },
-        text: {
-          dark: '#343A40',
+          darkGray: '#333333',
         },
         background: {
           white: '#FFFFFF',
@@ -31,4 +23,3 @@ export default {
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
 }
-

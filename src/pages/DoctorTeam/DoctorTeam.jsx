@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { BsLinkedin, BsTwitter } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 
@@ -151,6 +152,11 @@ const doctors = [
 const DoctorCard = ({ doctor }) => {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
+      <Helmet>
+        <title>
+          HealthFlow | Doctor Team
+        </title>
+      </Helmet>
       <img className="w-full" src={doctor.profileImage} alt={`Profile of ${doctor.name}`} />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{doctor.name}</div>
@@ -161,13 +167,16 @@ const DoctorCard = ({ doctor }) => {
         <p className="text-gray-700 text-base">Duty Hours: {doctor.availability.hours}</p>
       </div>
       <div className="px-6 pt-4 pb-2">
-        <a href={doctor.social.facebook} className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><FaFacebook/></a>
-        <a href={doctor.social.twitter} className="inline-block bg-blue-400 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><BsTwitter/></a>
-        <a href={doctor.social.linkedin} className="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><BsLinkedin/></a>
+        {/* Social Media Links */}
+        <a href={doctor.social.facebook} className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><FaFacebook /></a>
+        <a href={doctor.social.twitter} className="inline-block bg-blue-400 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><BsTwitter /></a>
+        <a href={doctor.social.linkedin} className="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><BsLinkedin /></a>
       </div>
     </div>
   );
 };
+
+// Assume `doctors` array is defined here...
 
 const DoctorCards = () => {
   return (

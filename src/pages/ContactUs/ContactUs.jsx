@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CgWebsite } from 'react-icons/cg';
 import { CiLocationOn } from 'react-icons/ci';
 import { FaPhoneAlt } from 'react-icons/fa';
@@ -13,12 +13,12 @@ const ContactUs = () => {
     return (
         <>
             <Helmet>
-                <title>HospitalityHub | Contact Us</title>
+                <title>HealthFlow | Contact Us</title>
             </Helmet>
-            <h1 className='bg-blue-500 py-2 md:py-3 text-center text-base sm:text-lg font-bold text-white rounded-md'>Contact Us</h1>
+            <h1 className='bg-primary-blue py-2 md:py-3 text-center text-base sm:text-lg font-bold text-background-white rounded-md'>Contact Us</h1>
             <div className='flex md:items-center flex-col md:flex-row my-4 gap-5'>
-                <div className='w-full md:w-1/2 border bg-blue-100 md:p-4 rounded-md'>
-                    <h1 className='px-2 pt-4 md:px-4 font-bold text-orange-500'>Get In Touch</h1>
+                <div className='w-full md:w-1/2 border bg-secondary-blue md:p-4 rounded-md'>
+                    <h1 className='px-2 pt-4 md:px-4 font-bold text-accent-orange'>Get In Touch</h1>
                     <form className="px-2 md:px-4">
                         <div className='flex flex-col md:flex-row gap-2'>
                             <div className="form-control w-full md:w-1/2">
@@ -51,19 +51,18 @@ const ContactUs = () => {
                                 <span className="label-text font-bold">Message</span>
                             </label>
                             <textarea cols={5} rows={4} className='border outline-none p-1 text-xs rounded-xl' placeholder='Write your message'></textarea>
-
                         </div>
                         <div className="form-control mt-6">
-                            <button type='submit' className="btn btn-primary btn-sm bg-blue-500 hover:bg-blue-600 text-white">Send</button>
+                            <button type='submit' className="btn btn-primary btn-sm bg-primary-blue hover:bg-primary-green text-background-white">Send</button>
                         </div>
                     </form>
                 </div>
 
                 <div className='flex flex-col w-full'>
                     <div className='mb-5 border p-1 sm:p-2 space-y-2'>
-                        <h1 className='pt-4 font-bold text-orange-400 text-base md:text-lg'>Contact Details</h1>
+                        <h1 className='pt-4 font-bold text-accent-orange text-base md:text-lg'>Contact Details</h1>
                         <div className='flex items-center gap-3'>
-                            <CiLocationOn className='text-orange-600 text-xl'></CiLocationOn>
+                            <CiLocationOn className='text-primary-blue text-xl'></CiLocationOn>
                             <div className='w-5/6'>
                                 <p className='font-bold text-xs md:text-base'>Location</p>
                                 <address className='text-xs md:text-sm'>
@@ -73,7 +72,7 @@ const ContactUs = () => {
                         </div>
 
                         <div className='flex items-center gap-3'>
-                            <FaPhoneAlt className='text-orange-600 text-lg'></FaPhoneAlt>
+                            <FaPhoneAlt className='text-primary-blue text-lg'></FaPhoneAlt>
                             <div className='w-5/6'>
                                 <p className='font-bold text-xs md:text-base'>Call Us</p>
                                 <span className='text-xs md:text-sm'> +1234 5678 90</span>
@@ -81,7 +80,7 @@ const ContactUs = () => {
                         </div>
 
                         <div className='flex items-center gap-3'>
-                            <MdEmail className='text-orange-600 text-xl w-5 h-5'></MdEmail>
+                            <MdEmail className='text-primary-blue text-xl w-5 h-5'></MdEmail>
                             <div className='w-5/6'>
                                 <p className='font-bold text-xs md:text-base'>Email Us</p>
                                 <span className='text-xs md:text-sm'>hospitalityhub@info.com</span>
@@ -89,17 +88,17 @@ const ContactUs = () => {
                         </div>
 
                         <div className='flex items-center gap-3'>
-                            <CgWebsite className='text-orange-600 text-xl w-5 h-5'></CgWebsite>
+                            <CgWebsite className='text-primary-blue text-xl w-5 h-5'></CgWebsite>
                             <div className='w-5/6'>
                                 <p className='font-bold text-xs md:text-base'>Visit our Website</p>
                                 <span className='text-xs md:text-sm'>www.hospitalityhub.com</span>
                             </div>
                         </div>
-
                     </div>
+
                     {/* React leaflet */}
-                    <div className='border p-1 md:-2'>
-                        <h1 className='text-base md:text-lg font-bold text-orange-500'>Find Us</h1>
+                    <div className='border p-1 md:p-2'>
+                        <h1 className='text-base md:text-lg font-bold text-accent-orange'>Find Us</h1>
                         <div className='overflow-hidden'>
                             <MapContainer center={position} zoom={13} style={{ height: "300px", width: "100%" }}>
                                 <TileLayer
@@ -112,12 +111,10 @@ const ContactUs = () => {
                                 </Marker>
                             </MapContainer>
                         </div>
-
                     </div>
                 </div>
             </div>
         </>
-
     );
 };
 

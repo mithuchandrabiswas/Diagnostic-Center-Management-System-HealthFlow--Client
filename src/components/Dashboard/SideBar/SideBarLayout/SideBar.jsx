@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsFillHouseAddFill, BsGraphUp } from 'react-icons/bs'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../../../hooks/useAuth'
-import { MdHomeWork } from 'react-icons/md'
 import useRole from '../../../../hooks/useRole'
 import MenuItem from '../Menu/MenuItem'
 import { FcSettings } from 'react-icons/fc'
@@ -14,10 +12,9 @@ import AdminMenu from '../Menu/AdminMenu'
 const SideBar = () => {
     const { logOut } = useAuth()
     const navigate = useNavigate()
-    const [isActive, setActive] = useState(false)
     const [toggle, setToggle] = useState(false)
-    const [role, isLoading] = useRole()
-    console.log(role);
+    const [role] = useRole()
+    // console.log(role);
 
     const handleLogOutUser = () => {
         logOut()
@@ -38,7 +35,7 @@ const SideBar = () => {
                 <div className='p-2 font-bold'>
                     <Link to='/'>
                         <img
-                            src='https://i.ibb.co/4ZXzmq5/logo.png'
+                            src='https://i.ibb.co/v3dJqsQ/642e77986d7e2c3fab722722-Health-Flow-Logo-Text.png'
                             alt='logo'
                             width='100'
                             height='100'
@@ -62,10 +59,10 @@ const SideBar = () => {
                     <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto'>
                         <Link to='/'>
                             <img
-                                src='https://i.ibb.co/4ZXzmq5/logo.png'
+                                src='https://i.ibb.co/v3dJqsQ/642e77986d7e2c3fab722722-Health-Flow-Logo-Text.png'
                                 alt='logo'
-                                width='100'
-                                height='100'
+                                width='150'
+                                height='150'
                             />
                         </Link>
                     </div>

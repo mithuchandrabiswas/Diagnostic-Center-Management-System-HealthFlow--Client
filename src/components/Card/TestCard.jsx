@@ -37,6 +37,7 @@ const TestCard = ({ test }) => {
         </div>
         <div className='font-semibold text-lg'>{test?.title}</div>
         <div className='font-light text-neutral-500'>{test?.date}</div>
+        <div className='font-light text-neutral-500'>{test?.test_name}</div>
         <div className='font-semibold'>Remaining Slots: {test?.total_slots}</div>
         <div className='flex flex-row items-center gap-1'>
           <div className='font-light' title={test?.details}>{test?.details.slice(0, 50)}</div>

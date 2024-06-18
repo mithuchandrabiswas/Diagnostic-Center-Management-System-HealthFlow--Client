@@ -11,7 +11,7 @@ const doctors = [
       days: ["Monday", "Wednesday", "Friday"],
       hours: "9:00 AM - 5:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/hK6t03V/01-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/johndoe",
       twitter: "https://twitter.com/johndoe",
@@ -27,7 +27,7 @@ const doctors = [
       days: ["Tuesday", "Thursday"],
       hours: "10:00 AM - 4:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/f1rQ8hN/05-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/janesmith",
       twitter: "https://twitter.com/janesmith",
@@ -43,7 +43,7 @@ const doctors = [
       days: ["Monday", "Tuesday", "Thursday"],
       hours: "8:00 AM - 3:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/4gdvfMk/02-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/emilybrown",
       twitter: "https://twitter.com/emilybrown",
@@ -59,7 +59,7 @@ const doctors = [
       days: ["Wednesday", "Friday"],
       hours: "11:00 AM - 6:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/7NY8CnR/03-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/michaellee",
       twitter: "https://twitter.com/michaellee",
@@ -75,7 +75,7 @@ const doctors = [
       days: ["Monday", "Thursday", "Friday"],
       hours: "9:30 AM - 4:30 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/wgRB5CK/04-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/sarahwilson",
       twitter: "https://twitter.com/sarahwilson",
@@ -91,7 +91,7 @@ const doctors = [
       days: ["Tuesday", "Wednesday"],
       hours: "10:00 AM - 5:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/XsyGR2q/07-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/davidkim",
       twitter: "https://twitter.com/davidkim",
@@ -107,7 +107,7 @@ const doctors = [
       days: ["Monday", "Wednesday", "Friday"],
       hours: "8:30 AM - 2:30 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/6NRq0Lq/08-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/lauramartinez",
       twitter: "https://twitter.com/lauramartinez",
@@ -123,7 +123,7 @@ const doctors = [
       days: ["Tuesday", "Thursday"],
       hours: "9:00 AM - 5:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/qd32bRh/06-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/robertjohnson",
       twitter: "https://twitter.com/robertjohnson",
@@ -139,7 +139,7 @@ const doctors = [
       days: ["Wednesday", "Friday"],
       hours: "10:00 AM - 6:00 PM"
     },
-    profileImage: "https://i.ibb.co/tJ3fnyG/free-images.jpg",
+    profileImage: "https://i.ibb.co/wgRB5CK/04-1536x1536.jpg",
     social: {
       facebook: "https://facebook.com/lisaturner",
       twitter: "https://twitter.com/lisaturner",

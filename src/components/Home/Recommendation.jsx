@@ -33,9 +33,8 @@ const Recommendation = () => {
     if (isError) return <div>Error: {error.message}</div>;
 
     return (
-        <div>
+        <div className="container mx-auto px-4">
             <Swiper
-                slidesPerView={3}
                 spaceBetween={30}
                 loop={true} // Enable infinite loop
                 autoplay={{
@@ -49,6 +48,17 @@ const Recommendation = () => {
                 navigation={true}
                 modules={[Autoplay, FreeMode, Pagination, Navigation]}
                 className="mySwiper"
+                breakpoints={{
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                }}
             >
                 {recommendations.map(recommendation => (
                     <SwiperSlide key={recommendation._id}>

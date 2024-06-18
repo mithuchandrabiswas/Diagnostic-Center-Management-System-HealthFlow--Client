@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
-import UpcommingAppointmentsTableRow from "../../../components/TableRow/UpcommingAppointmentsTableRow";
+import TestResultTableRow from "../../../components/TableRow/TestResultTableRow";
 
 const TestResults = () => {
     const axiosPublic = useAxiosPublic();
@@ -32,32 +32,38 @@ const TestResults = () => {
             <Helmet>
                 <title>My Test Results</title>
             </Helmet>
-            <h1 className="text-2xl">My Test Results ({deliveredAppointments?.length})</h1>
-            <div className='container mx-auto px-4 sm:px-8'>
-                <div className='py-8'>
+            <div className='container mx-auto px-2 sm:px-4'>
+                <h1 className="text-base md:text-xl font-semibold text-center">My all Test Results({deliveredAppointments?.length})</h1>
+                <div>
                     <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                         <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
                             {deliveredAppointments?.length > 0 ? (
-                                <table className='min-w-full leading-normal text-center text-xs'>
-                                    <thead className="text-center text-xs">
-                                        <tr className="text-center text-xs">
+                                <table className='min-w-full leading-normal'>
+                                    <thead>
+                                        <tr>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-[10px] md:text-xs font-normal uppercase'
                                             >
                                                 Test Name
                                             </th>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
                                             >
                                                 Appointment Date
                                             </th>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
                                             >
                                                 Appointment Time
+                                            </th>
+                                            <th
+                                                scope='col'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
+                                            >
+                                                Status
                                             </th>
                                             <th
                                                 scope='col'
@@ -70,7 +76,7 @@ const TestResults = () => {
 
                                     <tbody>
                                         {deliveredAppointments.map(appointment => (
-                                            <UpcommingAppointmentsTableRow
+                                            <TestResultTableRow
                                                 key={appointment._id}
                                                 appointment={appointment}
                                                 refetch={refetch}

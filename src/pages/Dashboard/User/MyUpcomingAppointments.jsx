@@ -30,38 +30,44 @@ const MyUpcomingAppointments = () => {
     return (
         <div>
             <Helmet>
-                <title>My Upcoming Appointments</title>
+                <title> || My Upcoming Appointments</title>
             </Helmet>
-            <h1 className="text-2xl">My All Booked Appointments ({pendingAppointments?.length})</h1>
-            <div className='container mx-auto px-4 sm:px-8'>
-                <div className='py-8'>
+            <div className='container mx-auto px-2 sm:px-4'>
+                <h1 className="text-base md:text-xl font-semibold text-center">My all upcomming Appointments ({pendingAppointments?.length})</h1>
+                <div>
                     <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                         <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
                             {pendingAppointments?.length > 0 ? (
-                                <table className='min-w-full leading-normal text-center text-xs'>
-                                    <thead className="text-center text-xs">
-                                        <tr className="text-center text-xs">
+                                <table className='min-w-full'>
+                                    <thead>
+                                        <tr>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
                                             >
                                                 Test Name
                                             </th>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
                                             >
                                                 Appointment Date
                                             </th>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
                                             >
                                                 Appointment Time
                                             </th>
                                             <th
                                                 scope='col'
-                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal col-span-2'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
+                                            >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope='col'
+                                                className='px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-xs font-normal uppercase'
                                             >
                                                 Action
                                             </th>

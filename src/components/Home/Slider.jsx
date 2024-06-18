@@ -10,7 +10,7 @@ const Slider = ({ recommendation }) => {
                     alt='Recommendation'
                 />
                 <div className='absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-2 w-full'>
-                    <div className='font-bold text-xl'>{recommendation?.text}</div>
+                    <div className='font-bold text-xs'>{recommendation?.text}</div>
                 </div>
             </div>
             <div className='p-4'>

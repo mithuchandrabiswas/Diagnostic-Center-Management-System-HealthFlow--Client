@@ -1,26 +1,26 @@
-# Diagnostic Center Management System
+# Diagnostic Center Management System (HealthFlow)
 
 ## Overview
-The Diagnostic Center Management System is a full-stack web application designed to manage appointments, patient records, test results, and administrative tasks for a diagnostic center. This system aims to streamline the operations of a diagnostic center, providing an intuitive interface for both users and administrators.
+The Diagnostic Center Management System (HealthFlow) is a full-stack web application designed to manage appointments, patient records, test results, and administrative tasks for diagnostic centers. This system aims to streamline operations, providing an intuitive interface for users and administrators alike.
 
 ## Live Site
-[Diagnostic Center Management System Live Site](https://example.com)
+[HealthFlow Live Site](https://assignment-twelve---full-stack.web.app)
 
 ## Admin Credentials
-- **Username:** admin@example.com
-- **Password:** admin123
+- **Username:** mithubiswasinfo@gmail.com
+- **Password:** Mithu@1122
 
 ## Features
-1. **Secure User Authentication**: Implements Firebase Authentication for secure email/password login and registration.
-2. **Comprehensive User Dashboard**: Allows users to manage their profile, view upcoming appointments, and access test results.
-3. **Dynamic Homepage**: Displays a dynamic banner managed by the admin, featured tests, promotions, and personalized recommendations.
-4. **Responsive Design**: Ensures the website is fully responsive and optimized for mobile, tablet, and desktop views.
-5. **Detailed Test Information**: Provides detailed information about available tests and allows users to book tests seamlessly.
-6. **Admin Dashboard**: Includes features for user management, test management, banner management, and viewing statistics.
-7. **Payment Integration**: Secure payment processing with Stripe, including support for promo codes and discounts.
-8. **PDF Generation**: Admin can download user details and their test history in PDF format.
-9. **Environment Variables**: Uses environment variables to securely manage Firebase config keys and MongoDB credentials.
-10. **Real-time Data Fetching**: Utilizes Tanstack Query for efficient and real-time data fetching.
+- **Secure User Authentication**: Implements Firebase Authentication for secure email/password login and registration.
+- **Comprehensive User Dashboard**: Allows users to manage profiles, view appointments, and access test results.
+- **Dynamic Homepage**: Displays a customizable banner managed by the admin, featured tests, promotions, and recommendations.
+- **Responsive Design**: Fully responsive and optimized for mobile, tablet, and desktop views.
+- **Detailed Test Information**: Provides comprehensive details about available tests and seamless booking.
+- **Admin Dashboard**: Includes user management, test management, banner management, and statistical insights.
+- **Payment Integration**: Secure payment processing with Stripe, supporting promo codes and discounts.
+- **PDF Generation**: Admins can download user details and test histories in PDF format.
+- **Environment Variables**: Uses environment variables to securely manage Firebase config keys and MongoDB credentials.
+- **Real-time Data Fetching**: Utilizes Tanstack Query for efficient and real-time data fetching.
 
 ## Technology Stack
 - **Frontend**: React, Firebase Authentication, React Router, Tailwind CSS/Bootstrap, Axios, Tanstack Query
@@ -35,4 +35,9 @@ The Diagnostic Center Management System is a full-stack web application designed
 - MongoDB
 - Firebase Project
 
+## Client Site GitHub Repository
+[Client Repository](https://github.com/programming-hero-web-course1/b9a12-client-side-Mithu1424882)
+
+## Server Site GitHub Repository
+[Server Repository](https://github.com/programming-hero-web-course1/b9a12-server-side-Mithu1424882)
 

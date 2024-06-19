@@ -174,7 +174,7 @@ const AddTest = () => {
                                     </label>
                                     <textarea
                                         id='details'
-                                        className='block rounded-md focus:ring-2 focus:ring-rose-500 w-full h-20 px-4 py-3 text-gray-800 border border-gray-300 focus:outline-none rounded-md'
+                                        className='block rounded-md focus:ring-2 focus:ring-rose-500 w-full h-20 px-4 py-3 text-gray-800 border border-gray-300 focus:outline-none'
                                         name='details'
                                     ></textarea>
                                 </div>

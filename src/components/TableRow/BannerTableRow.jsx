@@ -87,9 +87,9 @@ const BannerTableRow = ({ bannerInfo, refetch }) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 {bannerInfo?.isActive ? (
-                    <p className='text-green-500 whitespace-no-wrap'>Active</p>
+                    <p className='text-green-500 whitespace-no-wrap'>true</p>
                 ) : (
-                    <p className='text-red-500 whitespace-no-wrap'>Inactive</p>
+                    <p className='text-red-500 whitespace-no-wrap'>false</p>
                 )}
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>

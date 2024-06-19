@@ -33,7 +33,8 @@ const Recommendation = () => {
     if (isError) return <div>Error: {error.message}</div>;
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 py-10">
+            <h2 className="text-base md:text-2xl font-bold text-heading text-center mb-8">Recommendations</h2>
             <Swiper
                 spaceBetween={30}
                 loop={true} // Enable infinite loop

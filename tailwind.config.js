@@ -7,16 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          lightGray: '#f4f4f9',
-          blue: '#0073e6',
-        },
-        accent: {
-          darkGray: '#333333',
-        },
-        background: {
-          white: '#FFFFFF',
-        },
+        subheading: '#337ab7',
+        heading: '#404040',
+        paragraph: 'rgba(45, 54, 99, 0.75)',
+        buttonBg: '#009fe3',
+        buttonText: '#333333',
+        boxShadow: '#009fe3',
+      },
+      boxShadow: {
+        'custom': '0px 4px 8px #009fe3',
       },
     },
   },

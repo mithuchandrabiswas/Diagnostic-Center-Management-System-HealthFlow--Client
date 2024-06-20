@@ -18,8 +18,7 @@ const AboutUs = () => {
         <section className="my-10 text-center">
           <h3 className="text-xl md:text-2xl font-semibold mb-4 text-heading">Why patients choose our center</h3>
           <p className="max-w-2xl mx-auto text-paragraph">
-            Eitam condimentum aliquam odio, ut consectetur enim. Nullam metus purus, pharetra quis tempor id, feugiat
-            at augue. Eitam condimentum aliquam odio, ut consectetur enim.
+            At HealthFlow, we are committed to providing exceptional care and accurate diagnostics. Our center stands out because <span className="font-semibold">Advanced Technology </span><span className="font-semibold">Experienced Professionals</span><span className="font-semibold">Comprehensive Services </span><span className="font-semibold">Patient-Centered Care </span><span className="font-semibold"> Affordable Pricing</span><span className="font-semibold"> Convenient Location</span>
           </p>
         </section>
 
@@ -54,8 +53,9 @@ const AboutUs = () => {
           <h3 className="text-xl md:text-2xl font-semibold mb-4 text-center text-subheading">What our patients say</h3>
           <div className="flex flex-wrap justify-center gap-8">
             <div className="max-w-md bg-white p-6 rounded-lg shadow-custom">
-              <p className="mb-4 text-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                facilisis at turpis ac faucibus.
+              <p className="mb-4 text-paragraph">I had a great experience at CeHealthFlow. The team was knowledgeable and attentive, making sure I was comfortable and informed at every step. The facility is top-notch with the latest technology, and I appreciated the quick turnaround on my results. Excellent service and care!
+
+
               </p>
               <div className="flex items-center">
                 <img src="https://i.ibb.co/X728kTs/w3-70x70.jpg" alt="Patricia James" className="w-12 h-12 rounded-full mr-4" />
@@ -67,9 +67,7 @@ const AboutUs = () => {
             </div>
 
             <div className="max-w-md bg-white p-6 rounded-lg shadow-custom">
-              <p className="mb-4 text-paragraph">Duis et tellus imperdiet, lacinia risus id, tincidunt ipsum. Integer
-                euismod elit.
-              </p>
+              <p className="mb-4 text-paragraph">Choosing HealthFlow was the best decision I made for my health. The staff were incredibly friendly and professional, and the advanced equipment gave me confidence in the accuracy of my tests. The whole process was smooth and efficient, and I felt well taken care of throughout. Highly recommend!</p>
               <div className="flex items-center">
                 <img src="https://i.ibb.co/FgJ2MBw/w6-70x70.jpg" alt="Steven Rashford" className="w-12 h-12 rounded-full mr-4" />
                 <div>
@@ -91,44 +89,6 @@ const AboutUs = () => {
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-10">
-        <div className="container mx-auto px-4 md:px-8 lg:px-16">
-          <div className="flex flex-wrap justify-between gap-8">
-            {/* About us */}
-            <div className="flex-1 min-w-[200px]">
-              <h4 className="font-bold text-subheading">About us</h4>
-              <p className="text-paragraph">Eitam condimentum aliquam odio, ut consectetur enim. Nullam metus purus, pharetra quis tempus.</p>
-            </div>
-
-            {/* Explore */}
-            <div className="flex-1 min-w-[200px]">
-              <h4 className="font-bold text-subheading">Explore</h4>
-              <ul>
-                <li><a href="#" className="link link-hover text-blue-300">Home</a></li>
-                <li><a href="#" className="link link-hover text-blue-300">About us</a></li>
-                <li><a href="#" className="link link-hover text-blue-300">Products</a></li>
-                <li><a href="#" className="link link-hover text-blue-300">Blog</a></li>
-              </ul>
-            </div>
-
-            {/* Recent news */}
-            <div className="flex-1 min-w-[200px]">
-              <h4 className="font-bold text-subheading">Recent news</h4>
-              <ul>
-                <li><a href="#" className="link link-hover text-blue-300">The best recreation areas for general immunity</a></li>
-                <li><a href="#" className="link link-hover text-blue-300">How can women protect themselves from breast cancer</a></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Footer bottom */}
-          <div className="mt-10 text-center">
-            <p>&copy; 2024 HealthFlow. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

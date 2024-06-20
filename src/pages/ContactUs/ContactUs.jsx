@@ -62,7 +62,7 @@ const ContactUs = () => {
                     <div className='flex flex-col w-full'>
                         <div className='mb-5 border p-4 space-y-4 bg-background-white rounded-md shadow-custom'>
                             <h1 className='font-bold text-heading text-base md:text-lg'>Contact Details</h1>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-center justify-center gap-3'>
                                 <CiLocationOn className='text-subheading text-xl' />
                                 <div className='w-5/6'>
                                     <p className='font-bold text-xs md:text-base text-paragraph'>Location</p>
@@ -71,25 +71,25 @@ const ContactUs = () => {
                                     </address>
                                 </div>
                             </div>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-center justify-center gap-3'>
                                 <FaPhoneAlt className='text-subheading text-lg' />
                                 <div className='w-5/6'>
                                     <p className='font-bold text-xs md:text-base text-paragraph'>Call Us</p>
                                     <span className='text-xs md:text-sm text-paragraph'> +1234 5678 90</span>
                                 </div>
                             </div>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-center justify-center gap-3'>
                                 <MdEmail className='text-subheading text-xl' />
                                 <div className='w-5/6'>
                                     <p className='font-bold text-xs md:text-base text-paragraph'>Email Us</p>
-                                    <span className='text-xs md:text-sm text-paragraph'>hospitalityhub@info.com</span>
+                                    <span className='text-xs md:text-sm text-paragraph'>healthflow@info.com</span>
                                 </div>
                             </div>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-center justify-center gap-3'>
                                 <CgWebsite className='text-subheading text-xl' />
                                 <div className='w-5/6'>
                                     <p className='font-bold text-xs md:text-base text-paragraph'>Visit our Website</p>
-                                    <span className='text-xs md:text-sm text-paragraph'>www.hospitalityhub.com</span>
+                                    <span className='text-xs md:text-sm text-paragraph'>www.healthflow.com</span>
                                 </div>
                             </div>
                         </div>

@@ -62,16 +62,13 @@ const SignUp = () => {
             toast.error("Passwords do not match");
             return;
         }
-
         try {
             // 1) Upload image and get image URL link
             setLoading(true);
             const image_url = await imageUpload(image[0])
             // console.log(image_url);
-
             // 2) Create User or Registration
             const result = await createUser(email, password);
-
             // 3) Send User Name and image to Firebase
             await updateUserProfile(name, image_url);
 
@@ -99,17 +96,17 @@ const SignUp = () => {
     if (isLoading) {
         return <div>Loading...</div>;
     }
+    if(user) return navigate('/')
 
     return (
         <>
             <Helmet>
-                <title>Bistro Boss | Sign Up</title>
+                <title>HealthFlow | Sign Up</title>
             </Helmet>
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
                         <h1 className="text-5xl font-bold">Sign up now!</h1>
-                        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <form onSubmit={handleSubmit(handleSignUpSubmit)} className="card-body">

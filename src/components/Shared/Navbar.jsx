@@ -125,33 +125,37 @@ const Navbar = () => {
 
                     {user ? (
                       <>
-                        <Link
-                          to='/dashboard'
-                          className='block px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
-                        >
-                          Dashboard
-                        </Link>
-                        <div
-                          onClick={logOut}
-                          className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10 cursor-pointer'
-                        >
-                          Logout
+                        <div className='bg-white'>
+                          <Link
+                            to='/dashboard'
+                            className='block px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                          >
+                            Dashboard
+                          </Link>
+                          <div
+                            onClick={logOut}
+                            className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10 cursor-pointer'
+                          >
+                            Logout
+                          </div>
                         </div>
                       </>
                     ) : (
                       <>
-                        <Link
-                          to='/login'
-                          className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
-                        >
-                          Login
-                        </Link>
-                        <Link
-                          to='/signup'
-                          className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
-                        >
-                          Sign Up
-                        </Link>
+                        <div className='bg-white'>
+                          <Link
+                            to='/login'
+                            className='block px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                          >
+                            Login
+                          </Link>
+                          <Link
+                            to='/signup'
+                            className='block px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                          >
+                            Sign Up
+                          </Link>
+                        </div>
                       </>
                     )}
                   </div>

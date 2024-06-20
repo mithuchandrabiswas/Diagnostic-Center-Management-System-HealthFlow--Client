@@ -13,7 +13,8 @@ const AppointmentTableRow = ({ appointment, refetch }) => {
             toast.success('Appointment cancelled successfully');
             refetch(); // Refetch appointments data after successful deletion
         } catch (error) {
-            toast.error('Error cancelling appointment');
+            console.error('Error cancelling appointment:', error);
+            toast.error('Failed to cancel appointment');
         }
     };
 
@@ -46,7 +47,7 @@ const AppointmentTableRow = ({ appointment, refetch }) => {
             }
         } catch (error) {
             console.error('Error updating report status:', error);
-            toast.error('Error updating report status');
+            toast.error('Already update report status');
         }
     };
 

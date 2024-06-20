@@ -6,6 +6,7 @@ import useAuth from '../../../hooks/useAuth'
 import { Helmet } from 'react-helmet-async'
 
 const Login = () => {
+  const {user} = useAuth()
   const { signIn, loading, setLoading, resetPassword } = useAuth()
   const navigate = useNavigate();
   const [email, setEmail] = useState('')
@@ -48,6 +49,8 @@ const Login = () => {
     }
 
   }
+
+  if(user) return navigate('/')
 
   return (
     <div className='flex justify-center items-center'>

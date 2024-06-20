@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import Button from '../Shared/Button';
 import BookingAppointmentModal from '../Modal/Appointment/BookingAppointmentModal';
-import { format } from 'date-fns';
 import useRole from '../../hooks/useRole';
 
 const BookedTestAppointment = ({ test, refetch }) => {
@@ -13,14 +12,13 @@ const BookedTestAppointment = ({ test, refetch }) => {
     const [selectedSlot, setSelectedSlot] = useState('');
     const [slotOptions, setSlotOptions] = useState([]);
     // console.log(test);
-    console.log(role);
+    // console.log(role);
 
     const closeModal = () => {
         setIsOpen(false);
     };
 
-    const formattedBookingTime = format(new Date(), 'MMMM dd, yyyy HH:mm:ss');
-    const formattedTestDate = test?.date ? format(new Date(test.date), 'MMMM dd, yyyy') : 'N/A';
+    const formattedTestDate = new Date(test?.date).toLocaleDateString()
 
     const handleSlotSelection = (event) => {
         setSelectedSlot(event.target.value);
@@ -104,7 +102,7 @@ const BookedTestAppointment = ({ test, refetch }) => {
                 bookingInfo={{
                     ...test,
                     price: test?.price,
-                    booking_date: formattedBookingTime,
+                    booking_date: formattedTestDate,
                     time: selectedSlot,
                     report_status: 'pending',
                     bookerInfo: {

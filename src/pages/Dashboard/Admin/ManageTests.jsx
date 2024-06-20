@@ -3,6 +3,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
 import TestTableRow from "../../../components/TableRow/TestTableRow";
+import ReservationTableRow from "../../../components/TableRow/ReservationTableRow";
 
 const ManageTests = () => {
     const axiosPublic = useAxiosPublic();
@@ -20,6 +21,17 @@ const ManageTests = () => {
         },
     });
 
+    // All reservation
+    const {
+        data: reservations = [],
+    } = useQuery({
+        queryKey: ['reservations'],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get(`/appointments`);
+            return data;
+        },
+    });
+
     if (isLoading) return <LoadingSpinner />;
 
     return (
@@ -29,6 +41,7 @@ const ManageTests = () => {
                     <title>HealthFlow | Manage Tests</title>
                 </Helmet>
                 <div className="py-8">
+                    <h1>All Tests ({tests.length}) </h1>
                     <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
                             <table className="min-w-full leading-normal text-center">
@@ -90,6 +103,70 @@ const ManageTests = () => {
                                             key={test?._id}
                                             test={test}
                                             refetch={refetch}
+                                        />
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="py-8">
+                    <h1>All reservations ({reservations.length}) </h1>
+                    <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                        <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                            <table className="min-w-full leading-normal text-center">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Image
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Test Name
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Test Price
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Discount Amount
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Slot Date
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Time
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-5 py-3 bg-background-white border-b border-primary-lightGray text-accent-darkGray text-left text-sm uppercase font-normal"
+                                        >
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {reservations.map((reservation) => (
+                                        <ReservationTableRow
+                                            key={reservation?._id}
+                                            reservation={reservation}
                                         />
                                     ))}
                                 </tbody>

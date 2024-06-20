@@ -20,8 +20,8 @@ import ContactUs from '../pages/ContactUs/ContactUs'
 import DoctorTeam from '../pages/DoctorTeam/DoctorTeam'
 import AllTests from '../pages/AllTests/AllTests'
 import TestDetails from '../pages/DetailsPage/TestDetails'
-import MyProfile from '../pages/Dashboard/User/MyProfile'
 import AdminRoute from './AdminRoute'
+import MyProfile from '../pages/Dashboard/Common/UpdateProfile/MyProfile'
 
 
 
@@ -64,15 +64,11 @@ export const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       // // Common Routes
-      // {
-      //   path: 'profile',
-      //   element: <PrivateRoute><Profile /></PrivateRoute>,
-      // },
-      //User Routes
       {
         path: 'my-profile',
         element: <PrivateRoute><MyProfile /></PrivateRoute>,
       },
+      //User Routes
       {
         path: 'my-upcoming-appointments',
         element: <PrivateRoute><MyUpcomingAppointments /></PrivateRoute>,

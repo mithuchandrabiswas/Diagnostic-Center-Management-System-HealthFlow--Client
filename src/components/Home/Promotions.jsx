@@ -59,7 +59,13 @@ const PromotionCards = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="text-center mb-10">
+        <h1 className="text-heading text-2xl md:text-4xl font-bold mb-4">Promotion</h1>
+        <p className="w-2/3 mx-auto text-paragraph">
+          Explore our featured tests, handpicked for their popularity and high demand. These tests are essential for diagnosing various conditions and ensuring your health is monitored accurately. Each test is conducted with state-of-the-art equipment and administered by experienced professionals.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-10">
         {promotions.map((promotion, index) => (
           <PromotionCard key={index} promotion={promotion} />
         ))}

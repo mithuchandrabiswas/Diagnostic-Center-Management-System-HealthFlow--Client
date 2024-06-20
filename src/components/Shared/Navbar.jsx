@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className='fixed w-full z-10 shadow-sm bg-primary-lightGray bg-opacity-95'>
+    <div className='fixed w-full z-10 shadow-sm bg-slate-50'>
       <Helmet>
         <title>
           HealthFlow | Navbar
@@ -31,7 +31,7 @@ const Navbar = () => {
                 />
               </Link>
             </div>
-            <div className='hidden md:block'>
+            <div className='hidden md:block bg-background-white'>
               <NavLink
                 to='/'
                 className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
@@ -90,7 +90,7 @@ const Navbar = () => {
             {/* Dropdown Menu */}
             <div className='relative'>
               {isOpen && (
-                <div className='absolute rounded-xl shadow-md w-[40vw] md:w-[15vw] bg-background-white overflow-hidden right-5 top-8 text-sm'>
+                <div className='absolute rounded-xl shadow-md w-[60vw] md:w-[15vw] bg-white overflow-hidden right-5 top-8 text-sm'>
                   <div className='flex flex-col cursor-pointer'>
                     <Link
                       to='/'

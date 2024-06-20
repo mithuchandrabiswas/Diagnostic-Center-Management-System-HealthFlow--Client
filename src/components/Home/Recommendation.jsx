@@ -1,4 +1,3 @@
-import React from 'react';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../Shared/LoadingSpinner';
@@ -34,7 +33,12 @@ const Recommendation = () => {
 
     return (
         <div className="container mx-auto px-4 py-10">
-            <h2 className="text-base md:text-2xl font-bold text-heading text-center mb-8">Recommendations</h2>
+            <div className="text-center mb-10">
+                <h1 className="text-base md:text-2xl font-bold text-heading text-center mb-8">Recommendations</h1>
+                <p className="w-2/3 mx-auto text-paragraph">
+                    Explore our featured tests, handpicked for their popularity and high demand. These tests are essential for diagnosing various conditions and ensuring your health is monitored accurately. Each test is conducted with state-of-the-art equipment and administered by experienced professionals.
+                </p>
+            </div>
             <Swiper
                 spaceBetween={30}
                 loop={true} // Enable infinite loop

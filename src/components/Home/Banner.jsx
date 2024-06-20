@@ -32,12 +32,12 @@ const Banner = () => {
                         <div className="max-w-md space-y-4">
                             <h1 className="text-base md:text-2xl font-bold">{activeBanner.banner_title}</h1>
                             <h3 className="text-xs md:text-xl font-bold text-subheading">{activeBanner.banner_name}</h3>
-                            <p className="text-sm">{activeBanner.banner_description}</p>
-                            <div className='flex justify-between'>
+                            <p className="text-sm text-paragraph">{activeBanner.banner_description}</p>
+                            <div className='flex justify-between text-subheading'>
                                 <span>Coupon: {activeBanner.coupon_code}</span>
                                 <span>Off: {activeBanner.coupon_rate}%</span>
                             </div>
-                            <Link to='/all-tests'><button className="btn bg-buttonBg text-buttonText btn-sm mt-4 hover:bg-blue-400">All Tests</button></Link>
+                            <Link to='/all-tests'><button className="btn bg-buttonBg btn-sm mt-4 hover:bg-blue-400">All Tests</button></Link>
                         </div>
                     </div>
             }

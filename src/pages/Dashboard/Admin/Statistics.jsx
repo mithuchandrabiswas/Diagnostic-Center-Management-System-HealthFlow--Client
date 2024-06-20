@@ -1,68 +1,79 @@
-// import React from 'react';
-// import { useQuery } from '@tanstack/react-query';
-// import { Bar, Doughnut } from 'react-chartjs-2';
-// import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
-// import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { useQuery } from '@tanstack/react-query';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
-// const axiosPublic = () => {
-//     const axiosPublic = useAxiosPublic();
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-//     const { data: statData = {}, isLoading } = useQuery({
-//         queryKey: ['statData'],
-//         queryFn: async () => {
-//             const { data } = await axiosPublic.get('/appointments');
-//             return data;
-//         },
-//     });
+const Statistics = () => {
+    const axiosPublic = useAxiosPublic();
 
-//     if (isLoading) return <LoadingSpinner />;
+    const { data: appointments, error, isLoading } = useQuery({
+        queryKey: ['featured-tests'],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get('/appointments');
+            return data;
+        }
+    });
 
-//     // Assuming statData contains the necessary information
-//     const mostBookedData = statData.mostBookedServices || [];
-//     const pendingServices = statData.pendingServices || 0;
-//     const completedServices = statData.completedServices || 0;
+    if (isLoading) return <div className="text-center mt-5">Loading...</div>;
+    if (error) return <div className="text-center mt-5">Error: {error.message}</div>;
 
-//     return (
-//         <div>
-//             <h1>Statistics</h1>
-//             <h2>Most Booked Service</h2>
-//             <MostBookedChart data={mostBookedData} />
-//             <h2>Service Delivery Ratio</h2>
-//             <DeliveryRatioChart pending={pendingServices} completed={completedServices} />
-//         </div>
-//     );
-// };
+    // Process data for mostly booked service
+    const serviceCount = {};
+    const reportStatusCount = { pending: 0, delivery: 0 };
 
-// const MostBookedChart = ({ data }) => {
-//     const chartData = {
-//         labels: data.map(item => item.serviceName),
-//         datasets: [{
-//             label: 'Bookings',
-//             data: data.map(item => item.bookings),
-//             backgroundColor: [
-//                 'rgba(255, 99, 132, 0.6)',
-//                 'rgba(54, 162, 235, 0.6)',
-//                 'rgba(255, 206, 86, 0.6)'
-//             ]
-//         }]
-//     };
+    appointments.forEach(appointment => {
+        const serviceName = appointment.test_name;
+        const reportStatus = appointment.report_status;
 
-//     return <Bar data={chartData} />;
-// };
+        if (serviceCount[serviceName]) {
+            serviceCount[serviceName]++;
+        } else {
+            serviceCount[serviceName] = 1;
+        }
 
-// const DeliveryRatioChart = ({ pending, completed }) => {
-//     const chartData = {
-//         labels: ['Pending', 'Completed'],
-//         datasets: [{
-//             data: [pending, completed],
-//             backgroundColor: [
-//                 'rgba(255, 206, 86, 0.6)',
-//                 'rgba(54, 162, 235, 0.6)'
-//             ]
-//         }]
-//     };
+        if (reportStatusCount[reportStatus] !== undefined) {
+            reportStatusCount[reportStatus]++;
+        }
+    });
 
-//     return <Doughnut data={chartData} />;
-// };
+    const mostlyBookedServicesData = {
+        labels: Object.keys(serviceCount),
+        datasets: [{
+            label: 'Number of Bookings',
+            data: Object.values(serviceCount),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
 
-// export default axiosPublic;
+    const serviceDeliveryRatioData = {
+        labels: ['Pending', 'Completed'],
+        datasets: [{
+            label: 'Service Delivery Ratio',
+            data: [reportStatusCount.pending, reportStatusCount.delivery],
+            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+            borderWidth: 1
+        }]
+    };
+
+    return (
+        <div>
+            <div className='flex flex-col md:flex-row justify-center items-center p-4'>
+                <div className='md:w-1/2'>
+                    <h2>Mostly Booked Services</h2>
+                    <Bar data={mostlyBookedServicesData} />
+                </div>
+                <div className='md:w-1/2'>
+                    <h2>Service Delivery Ratio</h2>
+                    <Doughnut data={serviceDeliveryRatioData} />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Statistics;

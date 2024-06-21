@@ -160,9 +160,11 @@ import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import { Helmet } from 'react-helmet-async';
 import useAuth from '../../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const AllTests = () => {
     const axiosPublic = useAxiosPublic();
+    const axiosPrivate = useAxiosPrivate();
     const [itemsPerPage, setItemsPerPage] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -181,7 +183,7 @@ const AllTests = () => {
     const { data: allTest = [], isLoading: isLoadingTests, isError: isErrorTests, error: errorTests } = useQuery({
         queryKey: ['tests', currentPage, itemsPerPage, filter],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/tests?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`);
+            const { data } = await axiosPrivate.get(`/tests?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`);
             return data;
         },
         keepPreviousData: true,

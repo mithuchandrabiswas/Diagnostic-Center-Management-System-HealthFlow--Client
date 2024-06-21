@@ -11,7 +11,7 @@ import { BiUser } from 'react-icons/bi'
 import { MdEmail } from 'react-icons/md'
 
 const SeeUserInfoModal = ({ setIsOpen, isOpen, user }) => {
-    console.log(user);
+    // console.log(user);
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog

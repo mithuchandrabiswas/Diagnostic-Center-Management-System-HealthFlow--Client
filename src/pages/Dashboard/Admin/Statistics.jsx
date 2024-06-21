@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import { Helmet } from 'react-helmet-async';
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const Statistics = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosPrivate = useAxiosPrivate();
 
     const { data: appointments, error, isLoading } = useQuery({
         queryKey: ['featured-tests'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get('/appointments');
+            const { data } = await axiosPrivate.get('/appointments');
             return data;
         }
     });

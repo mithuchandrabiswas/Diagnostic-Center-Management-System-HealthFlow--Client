@@ -1,16 +1,15 @@
-
 import { useQuery } from '@tanstack/react-query';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { Link } from 'react-router-dom';
 import Container from '../Shared/Container';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const FeaturedTests = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosPrivate = useAxiosPrivate();
 
   const { data: tests, error, isLoading } = useQuery({
     queryKey: ['featured-tests'],
     queryFn: async () => {
-      const { data } = await axiosPublic.get('/featured-tests');
+      const { data } = await axiosPrivate.get('/featured-tests');
       return data;
     }
   });

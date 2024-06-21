@@ -1,24 +1,23 @@
 import { Link } from 'react-router-dom';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const Banner = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPrivate = useAxiosPrivate()
 
     const { data: banners = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['banners'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/banners`);
+            const { data } = await axiosPrivate .get(`/banners`);
             return data;
         },
     });
     // console.log(banners);
     const activeBanner = banners.find(banner => banner.isActive === true)
-    console.log(activeBanner);
+    // console.log(activeBanner);
 
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error: {error.message}</div>;
-
 
     return (
         <>

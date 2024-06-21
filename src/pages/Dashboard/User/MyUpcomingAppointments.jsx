@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import UpcommingAppointmentsTableRow from "../../../components/TableRow/UpcommingAppointmentsTableRow";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const MyUpcomingAppointments = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosPrivate = useAxiosPrivate();
     const { user } = useAuth();
 
     const { data: appointments, isLoading, isError, refetch } = useQuery({
         queryKey: ['appointments', user?.email],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/appointments/${user?.email}`);
+            const { data } = await axiosPrivate.get(`/appointments/${user?.email}`);
             return data;
         },
         enabled: !!user?.email

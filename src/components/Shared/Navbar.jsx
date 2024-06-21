@@ -127,7 +127,7 @@ const Navbar = () => {
                       <>
                         <div className='bg-white'>
                           <Link
-                            to='/dashboard'
+                            to='/dashboard/my-profile'
                             className='block px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
                           >
                             Dashboard

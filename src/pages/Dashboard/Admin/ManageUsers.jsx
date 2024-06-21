@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async'
 import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from '../../../components/Shared/LoadingSpinner'
-import useAxiosPublic from '../../../hooks/useAxiosPublic'
 import UserTableRow from '../../../components/TableRow/UserTableRow'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 const ManageUsers = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPrivate = useAxiosPrivate()
     //   Fetch users Data
     const {
         data: users = [],
@@ -13,19 +13,27 @@ const ManageUsers = () => {
     } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/users`)
-            return data
-        },
-    })
+            const token = localStorage.getItem('access-token');
+            // console.log(token);
+            if (!token) {
+                throw new Error('No access token found');
+            }
 
-    console.log(users)
+            const { data } = await axiosPrivate.get(`/users`);
+            return data;
+        },
+        onError: (error) => {
+            console.error('Error fetching users:', error);
+        }
+    });
+    // console.log(users)
     if (isLoading) return <LoadingSpinner />
     return (
         <>
             <div className='container mx-auto px-4 sm:px-8'>
-            <Helmet>
-                <title>HealthFlow | All Users</title>
-            </Helmet>
+                <Helmet>
+                    <title>HealthFlow | All Users</title>
+                </Helmet>
                 <div className='py-8'>
                     <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                         <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>

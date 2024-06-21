@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async'
-import useAxiosPublic from '../../../hooks/useAxiosPublic'
 import { useQuery } from '@tanstack/react-query'
 import useAuth from '../../../hooks/useAuth'
 import BannerTableRow from '../../../components/TableRow/BannerTableRow'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 
 const ManageBanner = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPrivate = useAxiosPrivate()
     const { user } = useAuth()
 
     const { data: banners = [], isLoading, isError, error, refetch } = useQuery({
@@ -13,7 +13,7 @@ const ManageBanner = () => {
         enabled: !!user?.email,
         queryFn: async () => {
             if (!user?.email) return []; 
-            const { data } = await axiosPublic.get(`/banners/${user.email}`);
+            const { data } = await axiosPrivate.get(`/banners/${user.email}`);
             return data;
         },
     });

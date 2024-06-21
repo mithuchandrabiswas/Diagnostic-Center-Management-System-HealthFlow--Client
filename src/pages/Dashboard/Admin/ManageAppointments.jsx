@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
 import AppointmentTableRow from "../../../components/TableRow/AppointmentTableRow";
 import { useState } from "react";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 
 const ManageAppointments = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosPrivate = useAxiosPrivate()
     const [search, setSearch] = useState('')
     const [searchText, setSearchText] = useState('')
     //   Fetch users Data
@@ -18,7 +18,7 @@ const ManageAppointments = () => {
     } = useQuery({
         queryKey: ['appointments', search],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/appointments?search=${search}`)
+            const { data } = await axiosPrivate.get(`/appointments?search=${search}`)
             return data
         },
     })

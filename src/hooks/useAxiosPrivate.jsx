@@ -1,55 +1,41 @@
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAuth from './useAuth';
+import axios from 'axios'
+import useAuth from './useAuth'
+import { useNavigate } from 'react-router-dom'
 
 export const axiosPrivate = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
-});
+  baseURL: import.meta.env.VITE_API_URL
+})
 const useAxiosPrivate = () => {
-  const { logOut } = useAuth();
-  const navigate = useNavigate();
+  const { logOut } = useAuth()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const requestIntercept = axiosPrivate.interceptors.request.use(
-      config => {
-        // Add the Authorization header to the request if a token is available
-        config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-        return config;
-      },
-      error => {
-        // Reject the request with an error
-        return Promise.reject(error);
-      }
-    );
+  // request interceptor to add authorization header for every secure call to teh api
+  axiosPrivate.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('access-token')
+    // console.log('request stopped by interceptors', token)
+    config.headers.authorization = `Bearer ${token}`;
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
 
-    const responseIntercept = axiosPrivate.interceptors.response.use(
-      response => {
-        // Return the response if it's successful
-        return response;
-      },
-      async error => {
-        // Log the error response for debugging
-        console.log('error tracked in the interceptor', error.response);
-        const status = error.response ? error.response.status : null;
-        if (status === 401 || status === 403) {
-          // Log the user out and navigate to the login page on 401 or 403 errors
-          await logOut();
-          navigate('/login');
-        }
-        return Promise.reject(error);
-      }
-    );
 
-    // Cleanup function to eject the interceptors when the component is unmounted
-    return () => {
-      axiosPrivate.interceptors.request.eject(requestIntercept);
-      axiosPrivate.interceptors.response.eject(responseIntercept);
-    };
-  }, [logOut, navigate]);
+  // intercepts 401 and 403 status
+  axiosPrivate.interceptors.response.use(function (response) {
+    return response;
+  }, async (error) => {
+    const status = error.response.status;
+    // console.log('status error in the interceptor', status);
+    // for 401 or 403 logout the user and move the user to the login
+    if (status === 401 || status === 403) {
+      await logOut();
+      navigate('/login');
+    }
+    return Promise.reject(error);
+  })
+
 
   return axiosPrivate;
 };
-
-export default useAxiosPrivate;
+export default useAxiosPrivate

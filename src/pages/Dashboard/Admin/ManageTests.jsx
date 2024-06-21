@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import { Helmet } from "react-helmet-async";
 import TestTableRow from "../../../components/TableRow/TestTableRow";
 import ReservationTableRow from "../../../components/TableRow/ReservationTableRow";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const ManageTests = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosPrivate = useAxiosPrivate();
 
     // Fetch tests data
     const {
@@ -16,7 +16,7 @@ const ManageTests = () => {
     } = useQuery({
         queryKey: ['tests'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/tests`);
+            const { data } = await axiosPrivate.get(`/tests`);
             return data;
         },
     });

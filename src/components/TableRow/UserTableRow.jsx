@@ -8,7 +8,6 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 import useAuth from '../../hooks/useAuth';
 import UpdateUserStatusModal from '../Modal/User/UpdateUserStatusModal';
 import UpdateUserRoleModal from '../Modal/User/UpdateUserRoleModal';
-import UserModal from '../Modal/UserModal'; // Assuming you have a modal for user details
 import SeeUserInfoModal from '../Modal/User/SeeUserInfoModal';
 
 const UserTableRow = ({ user, refetch }) => {
@@ -16,7 +15,6 @@ const UserTableRow = ({ user, refetch }) => {
 
     const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
     const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
-    const [isUserModalOpen, setIsUserModalOpen] = useState(false);
     const [isSeeUserInfoModalOpen, setSeeUserInfoModalOpen] = useState(false);
 
     const axiosPublic = useAxiosPublic();
@@ -165,11 +163,6 @@ const UserTableRow = ({ user, refetch }) => {
                     </button>
                 </td>
             </tr>
-            <UserModal
-                isOpen={isUserModalOpen}
-                onRequestClose={() => setIsUserModalOpen(false)}
-                user={user}
-            />
         </>
     );
 };

@@ -63,7 +63,6 @@ const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
   // Handle form submission
   const handleUpdateSubmit = async (data) => {
     const { name, email, image, blood_group, upazila } = data
-
     try {
       setLoading(true)
       let image_url = userInfo.image_url

@@ -21,7 +21,7 @@ const MyProfile = () => {
             return data
         }
     })
-    console.log(userInfo);
+    // console.log(userInfo);
 
     const { mutateAsync, isError, error } = useMutation({
         mutationFn: async ({ role, status }) => {

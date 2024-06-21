@@ -12,11 +12,9 @@ import SeeUserInfoModal from '../Modal/User/SeeUserInfoModal';
 
 const UserTableRow = ({ user, refetch }) => {
     const { user: loggedInUser } = useAuth();
-
     const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
     const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
     const [isSeeUserInfoModalOpen, setSeeUserInfoModalOpen] = useState(false);
-
     const axiosPublic = useAxiosPublic();
 
     const { mutateAsync } = useMutation({

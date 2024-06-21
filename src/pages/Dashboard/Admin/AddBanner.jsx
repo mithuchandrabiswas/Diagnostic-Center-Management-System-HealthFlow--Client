@@ -55,7 +55,7 @@ const AddBanner = () => {
     };
 
     return (
-        <div className="my-4 p-1 rounded-md mt-16">
+        <div className="my-4 p-1 rounded-md">
             <Helmet>
                 <title>HealthFlow | Add Banner</title>
             </Helmet>

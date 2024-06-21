@@ -61,9 +61,6 @@ const AddBanner = () => {
             </Helmet>
             <div className='py-2 md:py-4 space-y-1'>
                 <h1 className='text-center text-lg md:text-2xl font-bold text-blue-600'>Add Banner</h1>
-                <p className="text-xs md:text-md text-center w-full md:w-2/3 md:mx-auto text-gray-600">
-                    If you're ready to make a difference and join our team, please send a resume and brief cover letter outlining your interest in the position to [contact email or phone number]. We look forward to hearing from you!
-                </p>
             </div>
             <div className="card shrink-0 my-2 md:my-5 shadow-2xl bg-gray-200 w-full md:w-5/6 mx-auto">
                 <form onSubmit={handleBanner} className="card-body p-4">

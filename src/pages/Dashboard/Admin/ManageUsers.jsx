@@ -24,7 +24,7 @@ const ManageUsers = () => {
         <>
             <div className='container mx-auto px-4 sm:px-8'>
             <Helmet>
-                <title>HealthFlow | Manage Users</title>
+                <title>HealthFlow | All Users</title>
             </Helmet>
                 <div className='py-8'>
                     <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>

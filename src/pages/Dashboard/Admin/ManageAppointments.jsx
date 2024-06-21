@@ -41,7 +41,7 @@ const ManageAppointments = () => {
         <>
             <div className='container mx-auto px-4 sm:px-8'>
                 <Helmet>
-                    <title>HealthFlow | Manage Appointments</title>
+                    <title>HealthFlow | Reservation</title>
                 </Helmet>
 
                 <div className='py-8'>
@@ -121,6 +121,12 @@ const ManageAppointments = () => {
                                             className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                         >
                                             Cancel
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        >
+                                            Update Status
                                         </th>
                                     </tr>
                                 </thead>

@@ -55,7 +55,7 @@ const Login = () => {
   return (
     <div className='flex justify-center items-center'>
       <Helmet>
-        <title>Di || Login</title>
+        <title>HealthFlow | Login</title>
       </Helmet>
       <div className='flex flex-col max-w-md p-6 rounded-md  bg-gray-100 text-gray-900'>
         <div className='mb-2 text-center'>

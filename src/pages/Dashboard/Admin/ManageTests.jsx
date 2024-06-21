@@ -38,7 +38,7 @@ const ManageTests = () => {
         <>
             <div className="container mx-auto px-4 sm:px-8">
                 <Helmet>
-                    <title>HealthFlow | Manage Tests</title>
+                    <title>HealthFlow | All Tests</title>
                 </Helmet>
                 <div className="py-8">
                     <h1>All Tests ({tests.length}) </h1>

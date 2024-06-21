@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { Helmet } from 'react-helmet-async';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
@@ -63,6 +64,9 @@ const Statistics = () => {
     return (
         <div>
             <div className='flex flex-col md:flex-row justify-center items-center p-4'>
+                <Helmet>
+                    <title>HealthFlow | Statistics</title>
+                </Helmet>
                 <div className='md:w-1/2'>
                     <h2>Mostly Booked Services</h2>
                     <Bar data={mostlyBookedServicesData} />

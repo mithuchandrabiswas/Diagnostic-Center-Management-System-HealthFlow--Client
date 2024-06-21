@@ -62,7 +62,7 @@ const PromotionCards = () => {
       <div className="text-center mb-10">
         <h1 className="text-heading text-2xl md:text-4xl font-bold mb-4">Promotion</h1>
         <p className="w-2/3 mx-auto text-paragraph">
-          Explore our featured tests, handpicked for their popularity and high demand. These tests are essential for diagnosing various conditions and ensuring your health is monitored accurately. Each test is conducted with state-of-the-art equipment and administered by experienced professionals.
+          Explore our latest diagnostic tools and services for comprehensive health management. Stay informed and prioritize your well-being with us.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-10">

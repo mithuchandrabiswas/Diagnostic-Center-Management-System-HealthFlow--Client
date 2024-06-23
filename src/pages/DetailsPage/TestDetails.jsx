@@ -2,29 +2,25 @@
 import { Helmet } from 'react-helmet-async'
 import { useQuery } from '@tanstack/react-query'
 import { useParams, useSearchParams } from 'react-router-dom'
-import useAxiosPublic from '../../hooks/useAxiosPublic'
 import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 import Container from '../../components/Shared/Container'
 import BookedTestAppointment from '../../components/Appointment/BookedTestAppointment'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
 const TestDetails = () => {
   const { id } = useParams()
-  console.log(id);
-  const axiosPublic = useAxiosPublic()
-  // eslint-disable-next-line no-unused-vars
-  const [params, setParams] = useSearchParams()
-
+  // console.log(id);
+  const axiosPrivate = useAxiosPrivate()
   const { data: test = [], isLoading, refetch } = useQuery({
     queryKey: ['test', id],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/test-details/${id}`)
+      const { data } = await axiosPrivate.get(`/test-details/${id}`)
       return data
     },
   })
 
-
   if (isLoading) return <LoadingSpinner />
-  console.log(test);
+  // console.log(test);
 
   return (
     <Container>
@@ -43,11 +39,17 @@ const TestDetails = () => {
                   <div className='text-sm'>Hosted by {test?.adminInfo?.name}</div>
                   <img className='rounded-full' height='30' width='30' alt='Avatar' referrerPolicy='no-referrer' src={test?.adminInfo?.image} />
                 </div>
-                <div className='flex flex-row items-center gap-4 font-light text-neutral-500'>
-                  <div>Date: {test?.date} </div>
-                  <div>Name: {test?.test_name} </div>
-                  <div>Price: {test?.price} </div>
-                  <div>Total Slot: {test?.total_slots} </div>
+                <div className='flex flex-col md:flex-row items-center gap-4 font-light text-neutral-500'>
+
+                  <div className='text-xs md:text-base'>
+                    <div>Date: {test?.date} </div>
+                    <div>Name: {test?.test_name} </div>
+                  </div>
+                  <div className='text-xs md:text-base'>
+                    <div>Price: {test?.price} </div>
+                    <div>Total Slot: {test?.total_slots} </div>
+                  </div>
+
                 </div>
               </div>
 

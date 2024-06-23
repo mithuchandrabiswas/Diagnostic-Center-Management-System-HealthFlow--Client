@@ -18,9 +18,10 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic'
 import useAuth from '../../../hooks/useAuth'
 import { TbFidgetSpinner } from 'react-icons/tb'
 import ReactDatePicker from 'react-datepicker'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 
-const UpdateTestModal = ({ setIsOpen, isOpen, modalHandler, test }) => {
-    const axiosPublic = useAxiosPublic();
+const UpdateTestModal = ({ setIsOpen, isOpen, test }) => {
+    const axiosPrivate = useAxiosPrivate();
     const { loading, setLoading, user } = useAuth();
     const [imagePreview, setImagePreview] = useState();
     const [imageText, setImageText] = useState('Upload Image');
@@ -28,11 +29,11 @@ const UpdateTestModal = ({ setIsOpen, isOpen, modalHandler, test }) => {
     const queryClient = useQueryClient();
 
     // Fetch specific test data
-   
+
 
     const { mutateAsync } = useMutation({
         mutationFn: async (testData) => {
-            const { data } = await axiosPublic.put(`/test/${test._id}`, testData);
+            const { data } = await axiosPrivate.put(`/test/${test._id}`, testData);
             return data;
         },
         onSuccess: () => {

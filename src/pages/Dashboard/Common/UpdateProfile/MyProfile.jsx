@@ -50,8 +50,6 @@ const MyProfile = () => {
 
     if (loading || isLoading) return <LoadingSpinner />;
 
-    const { displayName, email, phoneNumber, uid } = user;
-
     return (
         <div className='flex flex-col items-center min-h-screen bg-gray-100 p-4'>
             <Helmet>
@@ -66,7 +64,7 @@ const MyProfile = () => {
                             className='object-cover rounded-full h-24 w-24 border-4 border- relative flex justify-center items-center'
                         />
                         {role && (
-                            <p className='bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full mt-2 absolute top-28'>
+                            <p className='bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-full mt-2 absolute top-40 md:top-28'>
                                 {role}
                             </p>
                         )}

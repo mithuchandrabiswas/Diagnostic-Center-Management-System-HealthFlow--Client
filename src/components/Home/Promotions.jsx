@@ -61,7 +61,7 @@ const PromotionCards = () => {
     <div className="container mx-auto px-4">
       <div className="text-center mb-10">
         <h1 className="text-heading text-2xl md:text-4xl font-bold mb-4">Promotion</h1>
-        <p className="w-2/3 mx-auto text-paragraph">
+        <p className="md:w-2/3 text-xs md:text-sm mx-auto text-paragraph">
           Explore our latest diagnostic tools and services for comprehensive health management. Stay informed and prioritize your well-being with us.
         </p>
       </div>

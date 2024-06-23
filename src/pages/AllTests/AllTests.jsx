@@ -18,7 +18,7 @@ const AllTests = () => {
     const [filter, setFilter] = useState('');
     const { user } = useAuth();
     const formattedDate = filter ? new Date(filter).toLocaleDateString('en-US') : '';
-    console.log(formattedDate);
+    // console.log(formattedDate);
 
     const { data: userInfo = {} } = useQuery({
         queryKey: ['userInfo'],
@@ -46,7 +46,7 @@ const AllTests = () => {
         },
         keepPreviousData: true,
     });
-    console.log(allTest);
+    // console.log(allTest);
 
     useEffect(() => {
         if (testsCount) {

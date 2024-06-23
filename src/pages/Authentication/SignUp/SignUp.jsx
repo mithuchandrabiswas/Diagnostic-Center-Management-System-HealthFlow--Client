@@ -16,10 +16,10 @@ const SignUp = () => {
     const { createUser, updateUserProfile, setLoading } = useAuth();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [selectedDistrictName, setSelectedDistrictName] = useState('');
     const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+    const [selectedUpazilaName, setSelectedUpazilaName] = useState('');
 
     // Get all District data from Database
     const { data: allDistrict = [], isLoading } = useQuery({
@@ -46,15 +46,21 @@ const SignUp = () => {
         setSelectedDistrict(districtId);
         setSelectedDistrictName(districtName);
         setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === districtId));
+
     };
+    // Update filtered upazilas when selected district changes
+    const handleUpazilasChange = (event) => {
+        const upazilaName = event.target.options[event.target.selectedIndex].text;
+        setSelectedUpazilaName(upazilaName);
+
+    };
+    // console.log(filteredUpazilas);
+    // console.log(selectedUpazilaName);
 
     const togglePassword = () => {
         setShowPassword(!showPassword);
     };
 
-    const toggleConfirmPassword = () => {
-        setShowConfirmPassword(!showConfirmPassword);
-    };
 
     const handleSignUpSubmit = async (data) => {
         const { name, email, password, confirm_password, image, blood_group, upazila } = data;
@@ -79,7 +85,7 @@ const SignUp = () => {
                 image_url,
                 blood_group,
                 district: selectedDistrictName, // Use the selected district name
-                upazila,
+                upazila: selectedUpazilaName,
                 status: "active",
                 role: 'user',
             };
@@ -96,7 +102,7 @@ const SignUp = () => {
     if (isLoading) {
         return <div>Loading...</div>;
     }
-    if(user) return navigate('/')
+    if (user) return navigate('/')
 
     return (
         <>
@@ -105,9 +111,6 @@ const SignUp = () => {
             </Helmet>
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Sign up now!</h1>
-                    </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <form onSubmit={handleSubmit(handleSignUpSubmit)} className="card-body">
                             <div className="form-control">
@@ -118,7 +121,7 @@ const SignUp = () => {
                                     type="text"
                                     {...register("name", { required: true })}
                                     placeholder="Name"
-                                    className="input input-bordered"
+                                    className="input input-sm input-bordered"
                                 />
                                 {errors.name && <span className="text-red-600">Name is required</span>}
                             </div>
@@ -128,6 +131,7 @@ const SignUp = () => {
                                 </label>
                                 <input
                                     type='file'
+                                    className="border p-1 rounded-md"
                                     id='image'
                                     accept='image/*'
                                     {...register("image", { required: true })}
@@ -142,7 +146,7 @@ const SignUp = () => {
                                     type="email"
                                     {...register("email", { required: true })}
                                     placeholder="email"
-                                    className="input input-bordered"
+                                    className="input input-sm input-bordered"
                                 />
                                 {errors.email && <span className="text-red-600">Email is required</span>}
                             </div>
@@ -150,7 +154,7 @@ const SignUp = () => {
                                 <label className="label">
                                     <span className="label-text">Blood Group</span>
                                 </label>
-                                <select {...register("blood_group", { required: true })} className="select select-bordered">
+                                <select {...register("blood_group", { required: true })} className="select select-sm select-bordered">
                                     <option value="">Select Blood Group</option>
                                     <option value="A+">A+</option>
                                     <option value="A-">A-</option>
@@ -169,7 +173,7 @@ const SignUp = () => {
                                 </label>
                                 <select
                                     {...register("district", { required: true })}
-                                    className="select select-bordered"
+                                    className="select select-sm select-bordered"
                                     onChange={handleDistrictChange}
                                 >
                                     <option value="">Select District</option>
@@ -183,7 +187,7 @@ const SignUp = () => {
                                 <label className="label">
                                     <span className="label-text">Upazila</span>
                                 </label>
-                                <select {...register("upazila", { required: true })} className="select select-bordered">
+                                <select {...register("upazila", { required: true })} className="select select-sm select-bordered" onChange={handleUpazilasChange}>
                                     <option value="">Select Upazila</option>
                                     {filteredUpazilas.map((upazila) => (
                                         <option key={upazila.id} value={upazila.name}>{upazila.name}</option>
@@ -205,7 +209,7 @@ const SignUp = () => {
                                             pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
                                         })}
                                         placeholder="password"
-                                        className="input input-bordered pr-10"
+                                        className="input input-sm input-bordered w-full"
                                     />
                                     <span className="absolute inset-y-0 right-0 pr-3 flex items-center">
                                         {showPassword ? (
@@ -230,15 +234,37 @@ const SignUp = () => {
                                 <label className="label">
                                     <span className="label-text">Confirm Password</span>
                                 </label>
-                                <input
-                                    type="password"
-                                    {...register("confirm_password", {
-                                        required: true,
-                                        validate: value => value === watch("password") || "Passwords do not match"
-                                    })}
-                                    placeholder="confirm password"
-                                    className="input input-bordered"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        {...register("confirm_password", {
+                                            required: true,
+                                            validate: value => value === watch("password") || "Passwords do not match",
+                                            minLength: 6,
+                                            maxLength: 20,
+                                            pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                                        })}
+                                        placeholder="Confirm Password"
+                                        className="input input-sm input-bordered w-full"
+                                    />
+                                    <span className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        {showPassword ? (
+                                            <FaEyeSlash
+                                                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                                                onClick={togglePassword}
+                                            />
+                                        ) : (
+                                            <FaEye
+                                                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                                                onClick={togglePassword}
+                                            />
+                                        )}
+                                    </span>
+                                </div>
+                                {errors.password?.type === 'required' && <span className="text-red-600">Password is required</span>}
+                                {errors.password?.type === 'minLength' && <span className="text-red-600">Password must be at least 6 characters</span>}
+                                {errors.password?.type === 'maxLength' && <span className="text-red-600">Password must be less than 20 characters</span>}
+                                {errors.password?.type === 'pattern' && <span className="text-red-600">Password must have one uppercase letter, one lowercase letter, one number, and one special character.</span>}
                                 {errors.confirm_password && <span className="text-red-600">{errors.confirm_password.message}</span>}
                             </div>
                             <div className="form-control mt-6">

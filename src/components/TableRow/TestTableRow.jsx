@@ -1,19 +1,19 @@
 // Import statements...
 import PropTypes from 'prop-types'
 import toast from "react-hot-toast";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useState } from "react";
 import { BiEdit } from 'react-icons/bi';
 import UpdateTestModal from '../Modal/Test/UpdateTestModal';
 import { confirmAlert } from 'react-confirm-alert';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const TestTableRow = ({ test, refetch }) => {
     const [isUpdateTestModalOpen, setIsUpdateTestModalOpen] = useState(false)
-    const axiosPublic = useAxiosPublic();
+    const axiosPrivate = useAxiosPrivate();
 
     const deleteBanner = async (id) => {
         try {
-            await axiosPublic.delete(`/test/${id}`);
+            await axiosPrivate.delete(`/test/${id}`);
             toast.success('Test delete successfully');
             refetch(); // Refetch Tests data after successful deletion
         } catch (error) {

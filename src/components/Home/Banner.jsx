@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Banner = () => {
-    const axiosPrivate = useAxiosPrivate()
+    const axiosPublic = useAxiosPublic();
 
     const { data: banners = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['banners'],
         queryFn: async () => {
-            const { data } = await axiosPrivate .get(`/banners`);
+            const { data } = await axiosPublic.get(`/banners`);
             return data;
         },
     });
@@ -25,16 +25,16 @@ const Banner = () => {
                 activeBanner === undefined ? 'Please add a active Banner'
                     :
                     <div className="flex flex-col md:flex-row justify-center items-center gap-4 bg-blue-200 rounded-md p-6 mb-10">
-                        <div className='w-1/2'>
+                        <div className='md:w-1/2'>
                             <img className='w-full' src={activeBanner.image_url} alt="" />
                         </div>
                         <div className="max-w-md space-y-4">
                             <h1 className="text-base md:text-2xl font-bold">{activeBanner.banner_title}</h1>
                             <h3 className="text-xs md:text-xl font-bold text-subheading">{activeBanner.banner_name}</h3>
                             <p className="text-sm text-paragraph">{activeBanner.banner_description}</p>
-                            <div className='flex justify-between text-subheading'>
-                                <span>Coupon: {activeBanner.coupon_code}</span>
-                                <span>Off: {activeBanner.coupon_rate}%</span>
+                            <div className='flex justify-between text-subheading flex-col md:flex-row'>
+                                <span className='text-xs md:text-sm'>Coupon: {activeBanner.coupon_code}</span>
+                                <span className='text-xs md:text-sm'>Off: {activeBanner.coupon_rate}%</span>
                             </div>
                             <Link to='/all-tests'><button className="btn bg-buttonBg btn-sm mt-4 hover:bg-blue-400">All Tests</button></Link>
                         </div>

@@ -16,9 +16,10 @@ const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
   const axiosPublic = useAxiosPublic()
   const { register, handleSubmit, formState: { errors }, setValue } = useForm()
   const { setLoading } = useAuth()
-  const [selectedDistrict, setSelectedDistrict] = useState('')
-  const [selectedDistrictName, setSelectedDistrictName] = useState('')
-  const [filteredUpazilas, setFilteredUpazilas] = useState([])
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [selectedDistrictName, setSelectedDistrictName] = useState('');
+  const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  const [selectedUpazilaName, setSelectedUpazilaName] = useState('');
 
   // Fetch districts and upazilas
   const { data: allDistrict = [], isLoading } = useQuery({
@@ -37,30 +38,38 @@ const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
     }
   })
 
-  // Pre-fill form with user data
   useEffect(() => {
     if (userInfo) {
       setValue("name", userInfo.name)
       setValue("email", userInfo.email)
       setValue("blood_group", userInfo.blood_group)
-      setValue("district", userInfo.district_id)
-      setSelectedDistrict(userInfo.district_id)
-      setSelectedDistrictName(userInfo.district)
-      setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === userInfo.district_id))
+      setValue("district", userInfo.district)
       setValue("upazila", userInfo.upazila)
+      setSelectedDistrict(userInfo.district)
+      setSelectedUpazilaName(userInfo.upazila)
     }
-  }, [userInfo, setValue, allUpazila])
+  }, [userInfo, setValue])
 
-  // Handle district change
+  useEffect(() => {
+    if (selectedDistrict) {
+      setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === selectedDistrict))
+    }
+  }, [selectedDistrict, allUpazila])
+
   const handleDistrictChange = (event) => {
     const districtId = event.target.value
     const districtName = event.target.options[event.target.selectedIndex].text
     setSelectedDistrict(districtId)
     setSelectedDistrictName(districtName)
     setFilteredUpazilas(allUpazila.filter(upazila => upazila.district_id === districtId))
+    setValue("upazila", "") // Reset upazila when district changes
   }
 
-  // Handle form submission
+  const handleUpazilasChange = (event) => {
+    const upazilaName = event.target.options[event.target.selectedIndex].text
+    setSelectedUpazilaName(upazilaName)
+  }
+
   const handleUpdateSubmit = async (data) => {
     const { name, email, image, blood_group, upazila } = data
     try {
@@ -81,7 +90,7 @@ const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
       await axiosPublic.put(`/user/update/${userInfo.email}`, userData)
 
       toast.success('User profile updated successfully')
-      setIsOpen(false) // Close the modal on successful update
+      setIsOpen(false)
     } catch (error) {
       toast.error(error.message)
     } finally {
@@ -188,9 +197,9 @@ const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
                         </label>
                         <select
                           {...register("district", { required: true })}
-                          className="select select-bordered select-sm"
+                          className="select select-sm select-bordered"
                           onChange={handleDistrictChange}
-                          defaultValue={userInfo?.district}
+                          value={selectedDistrict}
                         >
                           <option value="">Select District</option>
                           {allDistrict.map((district) => (
@@ -203,7 +212,7 @@ const UpdateUserProfile = ({ setIsOpen, isOpen, userInfo }) => {
                         <label className="label">
                           <span className="label-text">Upazila</span>
                         </label>
-                        <select {...register("upazila", { required: true })} className="select select-bordered select-sm" defaultValue={userInfo?.upazila}>
+                        <select {...register("upazila", { required: true })} className="select select-sm select-bordered" onChange={handleUpazilasChange} value={selectedUpazilaName}>
                           <option value="">Select Upazila</option>
                           {filteredUpazilas.map((upazila) => (
                             <option key={upazila.id} value={upazila.name}>{upazila.name}</option>

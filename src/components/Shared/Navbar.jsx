@@ -17,7 +17,7 @@ const Navbar = () => {
           HealthFlow | Navbar
         </title>
       </Helmet>
-      <div className='p-2 border-b border-neutral-200'>
+      <div className='px-2 md:p-2 border-b border-neutral-200'>
         <Container>
           <div className='flex flex-row items-center justify-between gap-3 md:gap-0'>
             {/* Logo */}
@@ -31,10 +31,10 @@ const Navbar = () => {
                 />
               </Link>
             </div>
-            <div className='hidden md:block bg-background-white'>
+            <div className='hidden lg:block bg-background-white text-sm'>
               <NavLink
                 to='/'
-                className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                className='px-2 py-2 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
               >
                 Home
               </NavLink>
@@ -42,7 +42,7 @@ const Navbar = () => {
                 <>
                   <NavLink
                     to='/all-tests'
-                    className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                    className='px-2 py-2 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
                   >
                     All Tests
                   </NavLink>
@@ -50,19 +50,19 @@ const Navbar = () => {
               )}
               <NavLink
                 to='/team'
-                className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                className='px-2 py-2 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
               >
                 Doctors Team
               </NavLink>
               <NavLink
                 to='/contact-us'
-                className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                className='px-2 py-2 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
               >
                 Contact Us
               </NavLink>
               <NavLink
                 to='/about-us'
-                className='px-4 py-3 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
+                className='px-2 py-2 transition font-semibold text-accent-darkGray hover:bg-primary-blue hover:bg-opacity-10'
               >
                 About Us
               </NavLink>

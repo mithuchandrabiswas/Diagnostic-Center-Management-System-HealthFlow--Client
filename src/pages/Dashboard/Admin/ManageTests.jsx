@@ -27,7 +27,7 @@ const ManageTests = () => {
     } = useQuery({
         queryKey: ['reservations'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/appointments`);
+            const { data } = await axiosPrivate.get(`/appointments`);
             return data;
         },
     });

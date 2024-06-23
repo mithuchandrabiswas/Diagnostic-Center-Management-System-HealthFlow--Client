@@ -34,8 +34,8 @@ const Recommendation = () => {
     return (
         <div className="container mx-auto px-4 py-10">
             <div className="text-center mb-10">
-                <h1 className="text-base md:text-2xl font-bold text-heading text-center mb-8">Recommendations</h1>
-                <p className="w-2/3 mx-auto text-paragraph">
+                <h1 className="text-heading text-2xl md:text-4xl font-bold mb-4">Recommendations</h1>
+                <p className="md:w-2/3 text-xs md:text-sm mx-auto text-paragraph">
                     Discover personalized health recommendations based on advanced diagnostics, tailored for your well-being and peace of mind.
                 </p>
             </div>

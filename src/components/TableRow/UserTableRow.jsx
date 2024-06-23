@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -9,8 +9,10 @@ import useAuth from '../../hooks/useAuth';
 import UpdateUserStatusModal from '../Modal/User/UpdateUserStatusModal';
 import UpdateUserRoleModal from '../Modal/User/UpdateUserRoleModal';
 import SeeUserInfoModal from '../Modal/User/SeeUserInfoModal';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const UserTableRow = ({ user, refetch }) => {
+    const axiosPrivate = useAxiosPrivate();
     const { user: loggedInUser } = useAuth();
     const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
     const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
@@ -61,6 +63,23 @@ const UserTableRow = ({ user, refetch }) => {
         }
     };
 
+    const {
+        data: appointments = [],
+    } = useQuery({
+        queryKey: ['appointments'],
+        queryFn: async () => {
+            const { data } = await axiosPrivate.get(`/appointments`);
+            return data;
+        },
+        onError: error => {
+            console.error('Error fetching appointments:', error);
+        }
+    });
+
+    const filteredAppointments = appointments.filter(
+        appointment => appointment.bookerInfo.email === user?.email
+    );
+
     const handleDownloadPdf = () => {
         const doc = new jsPDF();
         doc.text(`User Details`, 10, 10);
@@ -71,9 +90,29 @@ const UserTableRow = ({ user, refetch }) => {
                 ['Email', user.email],
                 ['Role', user.role],
                 ['Status', user.status],
-                // Add other fields here
+                ['Booked Appointments', filteredAppointments.length],
             ],
+            headStyles: { halign: 'center' },
+            bodyStyles: { halign: 'center' },
         });
+
+        if (filteredAppointments.length > 0) {
+            doc.text('Booked Appointments', 10, doc.lastAutoTable.finalY + 10);
+            doc.autoTable({
+                startY: doc.lastAutoTable.finalY + 20,
+                head: [['Test', 'Delivery Status', 'Date', 'Time', 'Price']],
+                body: filteredAppointments.map(appt => [
+                    appt.test_name,
+                    appt.report_status,
+                    appt.date,
+                    appt.time,
+                    appt.price,
+                ]),
+                headStyles: { halign: 'center' },
+                bodyStyles: { halign: 'center' },
+            });
+        }
+
         doc.save(`${user.email}-details.pdf`);
     };
 

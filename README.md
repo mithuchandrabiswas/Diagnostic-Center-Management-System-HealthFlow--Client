@@ -1,47 +1,49 @@
-# Diagnostic Center Management System (HealthFlow)
+# Diagnostic Center Management System - HealthFlow
 
 ## Overview
-HealthFlow is a comprehensive Diagnostic Center Management System designed to manage appointments, patient records, test results, and administrative tasks effectively for diagnostic centers. The project aims to enhance the efficiency of diagnostic centers and provide users with a seamless experience.
 
-## Live Site
-[HealthFlow Live Site](https://assignment-twelve---full-stack.web.app)
-
-## Admin Credentials
-- **Username:** mithubiswasinfo@gmail.com
-- **Password:** Mithu@1122
+HealthFlow is a comprehensive Diagnostic Center Management System designed to streamline the management of appointments, patient records, test results, and administrative tasks for diagnostic centers. This full-stack web application aims to enhance the efficiency of diagnostic centers by providing a seamless user experience and robust administrative tools.
 
 ## Features
-- **User Authentication and Profile Management**:
-  - Secure email/password authentication using Firebase Authentication.
-  - User registration with details like name, avatar (using imageBB for avatar upload), blood group, district, upazila, and password.
-  - User profile management and admin control over user status (active/blocked).
 
-- **User Dashboard (Private 🔒)**:
-  - Private dashboard with sections for profile management, upcoming appointments, and test results.
-  - Users can view and cancel upcoming appointments.
-  - Access to test results with options to download or print.
+- **User Authentication and Profile Management**:
+  - Secure user authentication using Firebase Authentication.
+  - Detailed profile management including user registration with email, name, avatar, blood group, district, upazila, password, and confirmation.
+  - Admin can manage user statuses and roles.
+
+- **User Dashboard**:
+  - Private dashboard for users to manage profiles, view upcoming appointments, and access test results.
+  - Users can cancel appointments and download or print test results.
 
 - **Admin Dashboard**:
-  - Management of users, tests, reservations, and banners.
+  - Manage users, tests, reservations, and banners.
   - Download user details in PDF format using jsPDF.
-  - Statistical charts for booking and delivery ratios.
+  - View statistics with charts on service bookings and delivery ratios.
 
-## Technology Stack
-- **Frontend**: React, Firebase Authentication, React Router, Tailwind CSS/Bootstrap, Axios, Tanstack Query
-- **Backend**: Node.js, Express, MongoDB, Mongoose, JWT
-- **Payment Gateway**: Stripe
+- **Responsive Design**:
+  - Optimized for mobile, tablet, and desktop views.
+
+- **Dynamic Banner**:
+  - Admin can upload and select banners to display on the homepage.
+
+## Technologies Used
+
+- **Frontend**: React.js, TailwindCSS, Axios, TanStack Query
+- **Backend**: Express.js, MongoDB
+- **Authentication**: Firebase Authentication
+- **Payment**: Stripe
 - **PDF Generation**: jsPDF
 
-## Setup Instructions
+## Project Setup
 
-### Prerequisites
-- Node.js
-- MongoDB
-- Firebase Project
+To run this project locally, follow these steps:
 
-## Client Site GitHub Repository
-[Client Repository](https://github.com/mithuchandrabiswas/Diagnostic-Center-Management-System-HealthFlow--Client)
-
-## Server Site GitHub Repository
-[Server Repository](https://github.com/mithuchandrabiswas/Diagnostic-Center-Management-System-HealthFlow--Server)
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/mithuchandrabiswas/Diagnostic-Center-Management-System-HealthFlow--Client.git
+   cd Diagnostic-Center-Management-System-HealthFlow--Client
+  
+2. **Install NPM Package**
+3. **Create a .env file your root directory**
+4. **Run: npm start**:
 

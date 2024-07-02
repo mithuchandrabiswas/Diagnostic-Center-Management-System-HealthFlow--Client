@@ -1,7 +1,7 @@
 # Diagnostic Center Management System (HealthFlow)
 
 ## Overview
-The Diagnostic Center Management System (HealthFlow) is a full-stack web application designed to manage appointments, patient records, test results, and administrative tasks for diagnostic centers. This system aims to streamline operations, providing an intuitive interface for users and administrators alike.
+HealthFlow is a comprehensive Diagnostic Center Management System designed to manage appointments, patient records, test results, and administrative tasks effectively for diagnostic centers. The project aims to enhance the efficiency of diagnostic centers and provide users with a seamless experience.
 
 ## Live Site
 [HealthFlow Live Site](https://assignment-twelve---full-stack.web.app)
@@ -11,16 +11,20 @@ The Diagnostic Center Management System (HealthFlow) is a full-stack web applica
 - **Password:** Mithu@1122
 
 ## Features
-- **Secure User Authentication**: Implements Firebase Authentication for secure email/password login and registration.
-- **Comprehensive User Dashboard**: Allows users to manage profiles, view appointments, and access test results.
-- **Dynamic Homepage**: Displays a customizable banner managed by the admin, featured tests, promotions, and recommendations.
-- **Responsive Design**: Fully responsive and optimized for mobile, tablet, and desktop views.
-- **Detailed Test Information**: Provides comprehensive details about available tests and seamless booking.
-- **Admin Dashboard**: Includes user management, test management, banner management, and statistical insights.
-- **Payment Integration**: Secure payment processing with Stripe, supporting promo codes and discounts.
-- **PDF Generation**: Admins can download user details and test histories in PDF format.
-- **Environment Variables**: Uses environment variables to securely manage Firebase config keys and MongoDB credentials.
-- **Real-time Data Fetching**: Utilizes Tanstack Query for efficient and real-time data fetching.
+- **User Authentication and Profile Management**:
+  - Secure email/password authentication using Firebase Authentication.
+  - User registration with details like name, avatar (using imageBB for avatar upload), blood group, district, upazila, and password.
+  - User profile management and admin control over user status (active/blocked).
+
+- **User Dashboard (Private 🔒)**:
+  - Private dashboard with sections for profile management, upcoming appointments, and test results.
+  - Users can view and cancel upcoming appointments.
+  - Access to test results with options to download or print.
+
+- **Admin Dashboard**:
+  - Management of users, tests, reservations, and banners.
+  - Download user details in PDF format using jsPDF.
+  - Statistical charts for booking and delivery ratios.
 
 ## Technology Stack
 - **Frontend**: React, Firebase Authentication, React Router, Tailwind CSS/Bootstrap, Axios, Tanstack Query
@@ -36,8 +40,8 @@ The Diagnostic Center Management System (HealthFlow) is a full-stack web applica
 - Firebase Project
 
 ## Client Site GitHub Repository
-[Client Repository](https://github.com/programming-hero-web-course1/b9a12-client-side-Mithu1424882)
+[Client Repository](https://github.com/mithuchandrabiswas/Diagnostic-Center-Management-System-HealthFlow--Client)
 
 ## Server Site GitHub Repository
-[Server Repository](https://github.com/programming-hero-web-course1/b9a12-server-side-Mithu1424882)
+[Server Repository](https://github.com/mithuchandrabiswas/Diagnostic-Center-Management-System-HealthFlow--Server)
 

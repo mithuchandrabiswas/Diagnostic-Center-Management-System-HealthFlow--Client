@@ -1,8 +1,11 @@
-# Diagnostic Center Management System - HealthFlow
+# HealthFlow - Diagnostic Center Management System
 
 ## Overview
 
 HealthFlow is a comprehensive Diagnostic Center Management System designed to streamline the management of appointments, patient records, test results, and administrative tasks for diagnostic centers. This full-stack web application aims to enhance the efficiency of diagnostic centers by providing a seamless user experience and robust administrative tools.
+
+## Live Site
+[HealthFlow Live](https://assignment-twelve---full-stack.web.app)
 
 ## Features
 
@@ -20,12 +23,6 @@ HealthFlow is a comprehensive Diagnostic Center Management System designed to st
   - Download user details in PDF format using jsPDF.
   - View statistics with charts on service bookings and delivery ratios.
 
-- **Responsive Design**:
-  - Optimized for mobile, tablet, and desktop views.
-
-- **Dynamic Banner**:
-  - Admin can upload and select banners to display on the homepage.
-
 ## Technologies Used
 
 - **Frontend**: React.js, TailwindCSS, Axios, TanStack Query
@@ -42,4 +39,3 @@ To run this project locally, follow these steps:
 2. **Install NPM Package**
 3. **Create a .env file your root directory**
 4. **Run: npm start**:
-
